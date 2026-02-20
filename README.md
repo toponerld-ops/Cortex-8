@@ -9,6 +9,19 @@ Building an AI-controlled FPV racing drone to be my racing partner since I have 
 
 @ Why?
 I love FPV racing but it's boring alone. Building my own opponent!
+## CAD Design
+
+### Complete Assembly
+![Drone Assembly](images/assembly.png)
+
+### Frame Design
+![Frame](images/frame.png)
+
+### Canopy with Camera Mount
+![Canopy](images/canopy.png)
+
+### Ducted Prop Guards
+![Prop Guards](images/prop-guards.png)
 
 ## Tech Stack
 * 75mm brushless whoops
