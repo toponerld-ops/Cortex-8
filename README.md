@@ -12,7 +12,7 @@ I love FPV racing but it's boring alone. Building my own opponent!
 ## CAD Design
 
 ### Complete Assembly
-![Drone Assembly](images/full_assembly.png)
+![Drone Assembly](images/fullassembly.png)
 
 ### Frame Design
 ![Frame](images/frame.png)
@@ -21,7 +21,7 @@ I love FPV racing but it's boring alone. Building my own opponent!
 ![Canopy](images/canopy.png)
 
 ### Ducted Prop Guards
-![Prop Guards](images/prop-guards.png)
+![Prop Guards](images/propguard.png)
 
 ## Tech Stack
 * 75mm brushless whoops
