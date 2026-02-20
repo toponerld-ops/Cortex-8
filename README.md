@@ -12,7 +12,7 @@ I love FPV racing but it's boring alone. Building my own opponent!
 ## CAD Design
 
 ### Complete Assembly
-![Drone Assembly](images/assembly.png)
+![Drone Assembly](images/full assembly.png)
 
 ### Frame Design
 ![Frame](images/frame.png)
