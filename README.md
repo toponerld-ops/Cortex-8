@@ -57,12 +57,12 @@ I love FPV racing but it's boring alone. Building my own opponent!
 * Custom 3D printed frames in Fusion 360
 
 ## Progress
-- [x] Design custom 75mm drone frame (30h)
-- [x] Design camera canopy (28h)  
-- [x] Design ducted prop guards (17h)
-- [x] Complete CAD assembly with electronics (8h)
+- [x] Design custom 75mm drone frame 
+- [x] Design camera canopy 
+- [x] Design ducted prop guards 
+- [x] Complete CAD assembly with electronics
 - [x] Export .STEP file for manufacturing
-- [ ] Order parts ($400 budget)
+- [ ] Order parts 
 - [ ] Build physical drone
 - [ ] Develop virtual AI opponent (OpenCV)
 - [ ] Test flight & tune
