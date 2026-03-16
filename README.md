@@ -50,6 +50,9 @@ I love FPV racing but it's boring alone. Building my own opponent!
 | 30AWG Flex Wire Red               | Signal/Camera Wiring           | https://robu.in/product/30awg-high-quality-ultra-flexible-silicone-wire-red/         | 5                | 4      | 25204.08    |
 | Eachine EV800 FPV Goggles – Black | fpv goggles                    | https://robu.in/product/eachine-ev800-fpv-goggles-black/                             | 7,960.00         | 1      | 33,164.08   |
 
+### CAD 
+[CAD Files](./CAD)
+
 ## Tech Stack
 * 75mm brushless whoops
 * Raspberry Pi 4 + GPS + camera
