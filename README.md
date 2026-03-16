@@ -23,6 +23,10 @@ I love FPV racing but it's boring alone. Building my own opponent!
 ### Ducted Prop Guards
 ![Prop Guards](images/propguard.png)
 
+### Wiring Diagram
+![Prop Guards](images/propguard.png)
+
+
 ## Tech Stack
 * 75mm brushless whoops
 * Raspberry Pi 4 + GPS + camera
