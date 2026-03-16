@@ -25,7 +25,8 @@ I love FPV racing but it's boring alone. Building my own opponent!
 
 ### Wiring Diagram
 ![Wiring Diag](images/wiring-diag.png)
-### Bill of metirials 
+
+### BOM
 | Product name                      | Product description            | Product link                                                                         | Unit Price (INR) | Amount | Total (INR) |
 |-----------------------------------|--------------------------------|--------------------------------------------------------------------------------------|------------------|--------|-------------|
 | Radiomaster Pocket                | ELRS Controller (Transparent)  | https://robu.in/product/radiomaster-pocket-radio-controller-elrs-transparent/        | 6389             | 1      | 6389        |
