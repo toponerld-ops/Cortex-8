@@ -2,10 +2,20 @@
 
 Building an AI-controlled FPV racing drone to be my racing partner since I have no one to race with.
 
+##  Project Overview
+**My-AI-Racing-Buddy** is a high-performance, 75mm micro FPV racing drone designed for indoor agility and future AI-assisted navigation. This project integrates a lightweight carbon fiber/nylon frame with a 5-in-1 AIO Flight Controller to maximize power-to-weight ratio.
+
+###  Key Features
+* **Compact Power:** Built on a 75mm whoop platform using 0802SE 19500KV brushless motors.
+* **FPV Ready:** Equipped with a C03 Micro Camera and VR03 Goggles for low-latency immersive flight.
+* **AI-Ready Architecture:** Designed with mounting points and power overhead for future integration of OpenCV-based companion computers.
+* **Manufacturability:** Complete CAD source files (.f3d) and industry-standard .STEP files included for 3D printing 
+
 @ The Setup
 * **Drone 1 (Me):** Controlled with my Avionic transmitter
 * **Drone 2 (AI):** Controlled by Raspberry Pi with computer vision
 * **Ground Station:** Pi processes FPV feeds, sends commands
+
 
 @ Why?
 I love FPV racing but it's boring alone. Building my own opponent!
