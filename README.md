@@ -59,6 +59,8 @@ I love FPV racing but it's boring alone. Building my own opponent!
 | 22AWG Flex Wire Red                           | Power Wiring (Positive)                 | https://robu.in/product/high-quality-ultra-flexible-22awg-silicone-wire-1500m-red/              | 18               | 3      | 25183.73    |
 | 30AWG Flex Wire Red                           | Signal/Camera Wiring                    | https://robu.in/product/30awg-high-quality-ultra-flexible-silicone-wire-red/                    | 5                | 4      | 25203.73    |
 | Eachine EV800 FPV Goggles – Black             | fpv goggles                             | https://robu.in/product/eachine-ev800-fpv-goggles-black/                                        | 7,960.00         | 1      | 33163.73    |
+| Canopy for Micro Camera 2022                  | Canopy for Micro Camera                 | https://betafpv.com/products/canopy-for-micro-camera-2022?variant=39858772869254                | 369.24           | 1      | 33532.97    |
+
 
 ### CAD 
 [CAD Files](./CAD)
