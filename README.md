@@ -48,18 +48,17 @@ I love FPV racing but it's boring alone. Building my own opponent!
 | Gemfan 1219S 3-Blade Propellers (1.0mm Shaft) | an ideal choice for high-speed rotating | https://betafpv.com/products/gemfan-1219s-3-blade-propellers-1-0mm-shaft?variant=41018473054342 | 831.95           | 1      | 22296.75    |
 | Camera C03                                    | FPV Micro Camera                        | https://betafpv.com/products/c03-fpv-micro-camera                                               | 1109.58          | 1      | 23406.33    |
 | BT2.0 Whoop Pigtail                           | Battery Connector (Pack of 6)           | https://robu.in/product/betafpv-bt2-0-whoop-cable-pigtail-6pcs/                                 | 646.84           | 1      | 24053.17    |
-| Air75 II Frame                                | 75mm Whoop Frame (Black)                | https://betafpv.com/products/air75-ii-brushless-whoop-frame                                     | 461.78           | 2      | 24514.95    |
-| Heat Shrink 1mm Red                           | WOER HST (1M)                           | https://robu.in/product/heat-shrink-sleeve-1mm-red-industrial-grade-woer-hst/                   | 10               | 1      | 24524.95    |
-| Heat Shrink 2mm Red                           | WOER HST (1M)                           | https://robu.in/product/heat-shrink-sleeve-2mm-red-industrial-grade-woer-hst/                   | 12               | 1      | 24536.95    |
-| Heat Shrink 3mm Red                           | WOER HST (1M)                           | https://robu.in/product/heat-shrink-sleeve-3mm-red-industrial-grade-woer-hst/                   | 7                | 1      | 24543.95    |
-| Heat Shrink 4mm Red                           | WOER HST (1M)                           | https://robu.in/product/heat-shrink-sleeve-4mm-red-industrial-grade-woer-hst/                   | 18               | 1      | 24561.95    |
-| Heat Shrink 5mm Red                           | WOER HST (1M)                           | https://robu.in/product/heat-shrink-sleeve-5mm-red-industrial-grade-woer-hst/                   | 23               | 1      | 24584.95    |
-| Heat Shrink 8mm Red                           | WOER HST (1M)                           | https://robu.in/product/heat-shrink-sleeve-8mm-red-industrial-grade-woer-hst/                   | 29               | 1      | 24613.95    |
-| 22AWG Flex Wire Black                         | Power Wiring (Negative)                 | https://robu.in/product/high-quality-ultra-flexible-22awg-silicone-wire-1000m-black/            | 18               | 3      | 24631.95    |
-| 22AWG Flex Wire Red                           | Power Wiring (Positive)                 | https://robu.in/product/high-quality-ultra-flexible-22awg-silicone-wire-1500m-red/              | 18               | 3      | 24649.95    |
-| 30AWG Flex Wire Red                           | Signal/Camera Wiring                    | https://robu.in/product/30awg-high-quality-ultra-flexible-silicone-wire-red/                    | 5                | 4      | 24654.95    |
-| Eachine EV800 FPV Goggles – Black             | fpv goggles                             | https://robu.in/product/eachine-ev800-fpv-goggles-black/                                        | 7,960.00         | 1      | 32614.95    |
-
+| Air75 II Frame                                | 75mm Whoop Frame (Black)                | https://betafpv.com/products/air75-ii-brushless-whoop-frame                                     | 461.78           | 2      | 24,976.73   |
+| Heat Shrink 1mm Red                           | WOER HST (1M)                           | https://robu.in/product/heat-shrink-sleeve-1mm-red-industrial-grade-woer-hst/                   | 10               | 1      | 24986.73    |
+| Heat Shrink 2mm Red                           | WOER HST (1M)                           | https://robu.in/product/heat-shrink-sleeve-2mm-red-industrial-grade-woer-hst/                   | 12               | 1      | 24998.73    |
+| Heat Shrink 3mm Red                           | WOER HST (1M)                           | https://robu.in/product/heat-shrink-sleeve-3mm-red-industrial-grade-woer-hst/                   | 7                | 1      | 25005.73    |
+| Heat Shrink 4mm Red                           | WOER HST (1M)                           | https://robu.in/product/heat-shrink-sleeve-4mm-red-industrial-grade-woer-hst/                   | 18               | 1      | 25023.73    |
+| Heat Shrink 5mm Red                           | WOER HST (1M)                           | https://robu.in/product/heat-shrink-sleeve-5mm-red-industrial-grade-woer-hst/                   | 23               | 1      | 25046.73    |
+| Heat Shrink 8mm Red                           | WOER HST (1M)                           | https://robu.in/product/heat-shrink-sleeve-8mm-red-industrial-grade-woer-hst/                   | 29               | 1      | 25075.73    |
+| 22AWG Flex Wire Black                         | Power Wiring (Negative)                 | https://robu.in/product/high-quality-ultra-flexible-22awg-silicone-wire-1000m-black/            | 18               | 3      | 25129.73    |
+| 22AWG Flex Wire Red                           | Power Wiring (Positive)                 | https://robu.in/product/high-quality-ultra-flexible-22awg-silicone-wire-1500m-red/              | 18               | 3      | 25183.73    |
+| 30AWG Flex Wire Red                           | Signal/Camera Wiring                    | https://robu.in/product/30awg-high-quality-ultra-flexible-silicone-wire-red/                    | 5                | 4      | 25203.73    |
+| Eachine EV800 FPV Goggles – Black             | fpv goggles                             | https://robu.in/product/eachine-ev800-fpv-goggles-black/                                        | 7,960.00         | 1      | 33163.73    |
 
 ### CAD 
 [CAD Files](./CAD)
