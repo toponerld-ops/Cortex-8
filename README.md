@@ -1,10 +1,10 @@
 # My AI Racing Buddy (ASH)
 
-Building an AI-controlled FPV racing drone to be my racing partner — because racing alone is boring.
+Building an AI-controlled FPV racing drone to be my racing partner because racing alone is boring.
 
 ## Why
 
-I love FPV racing but have no one to race with. So I decided to build my own opponent instead of waiting. ASH (my AI drone) will eventually race against me using computer vision and autonomous flight. This is phase 1 — getting the hardware right.
+I love FPV racing but have no one to race with. So I decided to build my own opponent instead of waiting. ASH (my AI drone) will eventually race against me using computer vision and autonomous flight. This is phase 1 getting the hardware right.
 
 ## The Concept
 
