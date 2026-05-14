@@ -194,8 +194,6 @@ AGND and DGND are separate nets joined at a single star point at the battery neg
 
 ## About
 
-Built by **Muduganti Aman Reddy** — Grade 12, Hyderabad, India. Hack Club Stasis grant project.
-
-3rd place Asia Pacific RoboCup Junior International. Building hardware since age 8.
+Built by **Muduganti Aman Reddy** — Grade 12, Hyderabad, India.
 
 > *"Racing alone is boring. So I built my own opponent."*
