@@ -4,7 +4,6 @@
 
 **8-in-1 AIO Flight Controller for X8 Coaxial Racing Drones**
 
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform](https://img.shields.io/badge/Platform-FPV%20Drone-blue)](https://github.com/yourusername/cortex-8)
 [![STM32](https://img.shields.io/badge/MCU-STM32H743-red.svg)](https://www.st.com/stm32h7)
 [![PCB](https://img.shields.io/badge/PCB-8%20Layer%20HDI-green)](https://jlcpcb.com)
