@@ -238,6 +238,130 @@ After flashing:
 - Blackbox: Enabled on 128MB flash
 - PID Tuning: Start with Betaflight defaults + X8-specific tweaks
 
+  ## **How to Build**
+
+### Prerequisites
+
+* EasyEDA Pro (schematic + PCB design)
+* JLCPCB account for fabrication and assembly
+* Soldering station with hot air (for QFN/BGA rework)
+* ST-Link V2 or V3 for STM32 firmware flashing
+* USB-C PD charger supporting 20V EPR (65W+)
+* 2x 2S LiPo batteries (850mAh+ recommended)
+
+### Step 1 — Order PCB from JLCPCB
+Use the following settings when ordering:
+
+| Setting              | Value                                      |
+|----------------------|--------------------------------------------|
+| PCB Layers           | 8                                          |
+| PCB Thickness        | 1.6mm                                      |
+| Surface Finish       | ENIG                                       |
+| Outer Copper Weight  | 2oz                                        |
+| Inner Copper Weight  | 1oz/2oz per stackup                        |
+| Min Hole Size        | 0.2mm                                      |
+| Via-in-Pad           | Yes (POFV — epoxy filled, copper capped)   |
+| Impedance Control    | Yes                                        |
+| X-Ray Inspection     | Yes                                        |
+| Stackup              | Advanced HDI                               |
+
+Upload the Gerber files from the /gerbers folder. Specify POFV for all BGA vias under the STM32 and all thermal vias under the MOSFETs — this must be called out explicitly in the order notes.
+
+### Step 2 — Order Components
+Export the BOM from EasyEDA Pro (Export → BOM) and upload to JLCPCB SMT Assembly. Most components are sourced from LCSC. Key parts to verify stock before ordering:
+
+| Component            | LCSC       | Notes                              |
+|----------------------|------------|------------------------------------|
+| STM32H743BIT6        | search     | UFBGA-176, verify stock            |
+| ESP32-S3-FN8         | search     | QFN-56                             |
+| ICM-42688-P          | search     | LGA-14                             |
+| ICM-20602            | search     | LGA-16                             |
+| FD6288Q              | search     | x8, gate drivers                   |
+| CSD17313Q2           | search     | x48, MOSFETs                       |
+| BQ25798RQMR          | search     | QFN-29, charger                    |
+| CH224K               | C970725    | USB-PD EPR                         |
+| W25Q128JW            | search     | WSON-8, flash                      |
+| TPS62840             | search     | 3.3V buck                          |
+| TPS62170             | search     | 5V buck                            |
+
+### Step 3 — Assembly Notes
+**STM32H743BIT6 (UFBGA-176):**
+* Requires X-ray inspection after reflow to verify BGA ball connections
+* All via-in-pad under BGA must be POFV before assembly
+* Use leaded solder paste for better BGA reflow results
+* Reflow profile: peak 235-245C, 60-90 seconds above liquidus
+
+**MOSFETs (CSD17313Q2 x48):**
+* Bottom layer, assembled after top layer reflow
+* Thermal vias must be POFV before assembly
+* No soldermask over FET copper areas -- bare copper exposed for convection cooling
+* Use hot air at 350C for rework
+
+**FD6288Q gate drivers:**
+* QFN package, bottom layer
+* Exposed pad must make solid contact with thermal via array
+
+**ICM-42688-P and ICM-20602:**
+* LGA packages, very sensitive to flux residue
+* Clean thoroughly with IPA after reflow
+* Do not use excessive heat -- 260C peak max
+
+### Step 4 — Firmware Setup
+1. Connect ST-Link V2/V3 to the 4-pin SWD header (1.27mm pitch, top layer)
+2. Pin order: VCC -- SWDIO -- SWCLK -- GND
+3. Flash bootloader using STM32CubeProgrammer
+4. Build and flash Betaflight or custom firmware via STM32CubeProgrammer or DFU
+5. Configure in Betaflight Configurator:
+   * Board target: custom (STM32H743)
+   * Motors: 8, DShot600 bidirectional
+   * Gyro: ICM-42688-P primary, ICM-20602 backup
+   * Blackbox: QSPI flash
+
+### Step 5 — Battery and Power
+1. Connect 2x 2S LiPo via XT30 connectors on bottom edge
+2. Default mode on power-up: 2S parallel (7.4V)
+3. STM32 controls series/parallel switching via PARALLEL_EN and SERIES_EN GPIOs
+4. Hardware interlock prevents both switches activating simultaneously regardless of firmware
+5. Charge via USB-C PD (20V EPR) -- CH224K negotiates voltage automatically, BQ25798 manages charge current via I2C
+
+### Step 6 — Motor Wiring
+Motor phase pads are on the board edges:
+* Left edge: M1, M3, M5, M7 (3 pads each -- Phase A, B, C)
+* Right edge: M2, M4, M6, M8 (3 pads each -- Phase A, B, C)
+
+Solder motor wires directly to pads. Pad size is 2x3mm -- use 20AWG silicone wire for motor connections.
+
+**X8 coaxial motor order (looking from top):**
+* M1/M2: Front motors (upper/lower)
+* M3/M4: Right motors (upper/lower)
+* M5/M6: Rear motors (upper/lower)
+* M7/M8: Left motors (upper/lower)
+
+### Step 7 — OpenFPV Stack
+Stack the OpenFPV camera module (SSC338Q + IMX415) on top using the 30.5x30.5mm M2 mounting holes. Connect via the 4-pin JST 1.25mm connector on the top edge. BL-M8812EU2 WiFi adapter connects via the adjacent header.
+
+### Step 8 — Crash Locator Setup
+1. Connect 300mAh 1S LiPo to JST 1x2 connector (backup battery)
+2. The crash locator activates automatically when main battery disconnects
+3. ESP32 broadcasts BLE beacon every 30 minutes with last known position
+4. Use any BLE scanner app on Android/iOS to locate the drone
+5. Backup battery charges automatically via USB-C when drone is recovered
+
+### Troubleshooting
+
+| Issue                              | Cause                        | Fix                                              |
+|------------------------------------|------------------------------|--------------------------------------------------|
+| STM32 not detected by ST-Link      | BOOT0 floating               | Check 10k pull-down on BOOT0                     |
+| No motor response                  | DShot not configured         | Verify TIM5/TIM3/TIM1 in firmware                |
+| IMU not detected                   | SPI routing issue            | Check SPI1 traces, verify CS pins                |
+| USB-PD not negotiating 20V         | CH224K CFG pins              | Verify CFG1/CFG2 HIGH, CFG3 LOW                  |
+| Charging not starting              | CHARGE_EN stuck high         | Pull CHARGE_EN low via STM32 GPIO                |
+| BGA cold joints                    | Reflow profile               | Re-reflow with proper temperature curve          |
+
+---
+
+
+
 ## **IMAGES**
 
 
