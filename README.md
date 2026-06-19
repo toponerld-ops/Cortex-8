@@ -8,12 +8,27 @@
 [![STM32](https://img.shields.io/badge/MCU-STM32H743-red.svg)](https://www.st.com/stm32h7)
 [![PCB](https://img.shields.io/badge/PCB-8%20Layer%20HDI-green)](https://jlcpcb.com)
 [![OpenFPV](https://img.shields.io/badge/FPV-OpenFPV-orange)](https://openfpv.org)
+[![Generation](https://img.shields.io/badge/Generation-5th-brightgreen)](https://github.com/yourusername/cortex-8)
 
 **High-performance X8 coaxial FPV racing drone flight controller** — everything integrated on a single 61×65mm board.
 
 </div>
 
 ---
+## **Project Vision**
+
+This is the **5th generation** of my custom AIO flight controller.
+
+I’m building this because I want to see **how far I can push the limits** of what a single person (with help from AI) can achieve in drone hardware and autonomy.
+
+My goal is simple yet ambitious:
+- Design high-performance flight controllers from scratch
+- Fully integrate every subsystem onto one compact board
+- Explore **AI-driven autonomous flight** — drones that can think and react on their own without human intervention
+
+I’ve always been fascinated by machines that work independently. This project is my playground to experiment with advanced flight control, power systems, digital FPV, crash recovery, and eventually full AI autonomy.
+
+**Cortex-8** is another step toward that vision.
 
 ## **Overview**
 
