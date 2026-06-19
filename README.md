@@ -37,29 +37,35 @@ Every subsystem — flight control, ESC power stage, dual battery matrix, USB-PD
 
 ### **Dual Battery Matrix**
 - Switch between **7.4V (parallel)** and **14.8V (series)** in flight
-- Hardware interlock prevents short circuits
+- Hardware (AND gate + inverter) interlock prevents short circuits
+- TLV3201 comparator disables switching above 30A
 - Ideal diode protection + pre-charge soft-start
 - Mid-flight balancing
 
 ### **Octo-ESC Power Stage**
 - 8× dedicated **FD6288Q** gate drivers
 - 48× **CSD17313Q2** MOSFETs (**10A continuous** per phase)
+- 2× **INA240A2** current sensors with Kelvin-connected shunts
+- Snubber capacitors on every motor phase
 - High-side current sensing with PWM rejection
 
 ### **Power & Charging**
 - Dual high-efficiency bucks
+- **TPS62840** 3.3V/2A buck for STM32 & IMUs
+- **TPS62170** 5V/2A buck for ESP32 & peripherals
 - **140W USB-PD** (20V EPR) fast charging
 - Filtered rail for OpenFPV camera
 
 ### **Digital FPV**
-- **OpenFPV** (SSC338Q + IMX415)
-- **RTL8812EU** 5GHz Wi-Fi (**29dBm**)
-- **5–6km** range with PixelPilot
+- **OpenFPV** system: **SSC338Q + IMX415** camera
+- **BL-M8812EU2** (RTL8812EU, **29dBm**) 5GHz Wi-Fi adapter
+- **Up to 5–6km** range with PixelPilot ground station
 
-### **Safety & Recovery**
-- Hardware arming inhibit (works even if MCU is crashed)
-- Dual watchdog timers
-- **Emergency Crash Locator** — 300mAh backup + BLE SOS beacon (**48+ hours**)
+### **Hardware Safety Systems**
+- **Hardware arming inhibit** via JST-GH safety switch (kills all 8 gate driver EN pins)
+- **WWDG + IWDG** dual watchdog
+- **WS2812B** RGB LED status + passive buzzer
+- **Emergency Crash Locator** with 300mAh backup LiPo + BLE SOS beacon (48+ hours)
 
 ---
 
@@ -82,21 +88,24 @@ Every subsystem — flight control, ESC power stage, dual battery matrix, USB-PD
 
 ---
 
-## **Key Specs**
+## 📊 **Key Specs**
 
-| Parameter           | Value                                      |
-|---------------------|--------------------------------------------|
-| **MCU**             | STM32H743BIT6 @ 480MHz                     |
-| **Wireless**        | ESP32-S3 (ELRS + Wi-Fi + BLE)              |
-| **Motors**          | 8× X8 Coaxial                              |
-| **Battery**         | 2× 2S LiPo (7.4V / 14.8V switchable)      |
-| **Max Current**     | 10A continuous per phase                   |
-| **Charging**        | 140W USB-PD EPR                            |
-| **Blackbox**        | 128MB QSPI                                 |
-| **FPV**             | OpenFPV (IMX415) — up to **5-6km**         |
-| **Size**            | 61×65mm                                    |
-| **Mounting**        | 30.5×30.5mm M2                             |
-
+| Parameter              | Value                                      |
+|------------------------|--------------------------------------------|
+| **MCU**                | STM32H743BIT6 @ 480MHz                     |
+| **Wireless**           | ESP32-S3 (Wi-Fi + BLE + ELRS)              |
+| **Motors**             | 8 (X8 Coaxial)                             |
+| **Battery**            | 2× 2S LiPo (Series/Parallel switchable)    |
+| **Voltage Modes**      | 7.4V (parallel) / 14.8V (series)           |
+| **Max Current**        | 10A continuous per phase                   |
+| **Charging**           | 140W USB-PD (20V EPR)                      |
+| **Blackbox**           | 128MB QSPI Flash                           |
+| **FPV**                | OpenFPV (SSC338Q + IMX415)                 |
+| **Video Range**        | 5–6km @ 5GHz                               |
+| **PCB Size**           | 61×65mm                                    |
+| **Layers**             | 8-layer HDI                                |
+| **Stack**              | 30.5×30.5mm M2                             |
+| **Fabrication**        | JLCPCB Advanced + ENIG + X-ray             |
 ---
 
 ## **Getting Started**
