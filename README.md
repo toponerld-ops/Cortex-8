@@ -103,6 +103,8 @@ ParameterValueMCUSTM32H743BIT6 @ 480MHzWirelessESP32-S3-FN8 (Wi-Fi + BLE + ELRS)
 
 IMAGES----
 
+TOP-PCB-3D
+
 ![TOP-PCB-3D](Images/TOP-PCB-3D.png)
 
 
