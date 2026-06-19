@@ -25,14 +25,6 @@ Every subsystem — flight control, ESC power stage, dual battery matrix, USB-PD
 
 ---
 
-## **Table of Contents**
-- [Key Features](#-key-features)
-- [PCB Design](#-pcb-design)
-- [Key Specs](#-key-specs)
-- [Getting Started](#-getting-started)
-
----
-
 ## **Key Features**
 
 ### **Flight Control**
