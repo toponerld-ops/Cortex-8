@@ -187,7 +187,41 @@ BOM
 |60 |1       |TYPE-C 16PIN 3MD(385)|USB1                                                                                                                                                                                                                                                                                                                                                                  |USB-C-SMD_TYPE-C16PIN                 |      |TYPE-C 16PIN 3MD(385) |SHOU HAN(首韩)       |C2858270     |LCSC    |0.0193      |28089       |
 
 
+## **Firmware & Flashing Guide**
 
+**Cortex-8 uses Betaflight firmware.**
+
+### 1. Download Betaflight Configurator
+- Download the latest **Betaflight Configurator** from:  
+  [GitHub Releases](https://github.com/betaflight/betaflight-configurator/releases)
+
+### 2. Enter DFU / Bootloader Mode
+1. Disconnect all batteries and USB.
+2. connect the board to your PC via USB-C.
+3. The board should now appear as **"STM32 Bootloader"** in Device Manager (Windows) or as a DFU device.
+
+### 3. Flash Firmware
+1. Open **Betaflight Configurator**.
+2. Go to the **Firmware Flasher** tab.
+3. **Select Target**: 
+   - Start with a generic **STM32H7** target (e.g. `BETAFPVF7` or `H7` generic if available).
+   - For best results, use a **custom target** (we will provide `.json` target file in `/firmware/targets/` soon).
+4. Choose the latest **Betaflight 4.5.x** (or newer) version.
+5. Click **"Load Firmware [Online]"** or **"Load Firmware [Local]"** if using a pre-built HEX.
+6. Click **"Flash Firmware"**.
+7. Wait until you see **"Programming Successful"**.
+
+### 4. Post-Flash Configuration
+After flashing:
+- Connect to the board normally.
+- Go to **Ports** tab → Enable UARTs for ELRS, GPS, etc.
+- Use **CLI** to run resource remapping if needed for custom pinouts.
+- Load a preset for X8 coaxial configuration.
+
+**Recommended Settings**:
+- ESC Protocol: **DShot600**
+- Blackbox: Enabled on 128MB flash
+- PID Tuning: Start with Betaflight defaults + X8-specific tweaks
 
 ## **IMAGES**
 
