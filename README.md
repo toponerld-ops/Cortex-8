@@ -166,4 +166,8 @@ BOTTOM LAYER TRACE
 
 ![BOTTOM-LAYER-TRACE](Images/BOTTOM-LAYER-TRACE.png)
 
+ZINE-Cortex-8
+
+![ZINE](Images/ZINE-Cortex-8.png)
+
 Designed by Muduganti Aman Reddy | Hackclub
