@@ -1,6 +1,11 @@
 Cortex-8
 
-8-in-1 AIO Flight Controller for X8 Coaxial Racing Drones
+8-in-1 AIO Flight Controller for X8 Coaxial Racing Drones 
+
+![License](https://shields.io)
+![Platform](https://shields.io)
+![Wireless](https://shields.io)
+![Fabrication](https://shields.io)
 
 Cortex-8 is a custom 8-in-1 all-in-one flight controller designed from scratch for high-performance X8 coaxial FPV racing drones. Every subsystem -- flight control, ESC power stage, dual battery matrix, USB-PD charging, digital FPV video, and emergency crash locator -- is integrated onto a single 61x65mm 8-layer HDI PCB.
 
