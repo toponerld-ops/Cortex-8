@@ -88,7 +88,7 @@ Every subsystem — flight control, ESC power stage, dual battery matrix, USB-PD
 
 ---
 
-## 📊 **Key Specs**
+## **Key Specs**
 
 | Parameter              | Value                                      |
 |------------------------|--------------------------------------------|
