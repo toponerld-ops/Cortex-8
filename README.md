@@ -101,14 +101,9 @@ Key Specs
 
 ParameterValueMCUSTM32H743BIT6 @ 480MHzWirelessESP32-S3-FN8 (Wi-Fi + BLE + ELRS)Motors supported8 (X8 coaxial)Battery input2x 2S LiPo (series/parallel switchable)Voltage modes7.4V (2S parallel) / 14.8V (4S series)Max motor current10A continuous per phaseCharging140W USB-PD (20V EPR)Blackbox128MB W25Q128JW QSPI flashFPV systemOpenFPV (SSC338Q + IMX415)Video range5-6km @ 5GHzPCB size61x65mmPCB layers8 (HDI)Stack pattern30.5x30.5mm M2FabricationJLCPCB Advanced + ENIG + X-ray
 
+IMAGES----
 
-Project Status
-
-
-Schematic: Complete (7 blocks, 0 DRC errors)
-PCB Layout: In progress
-Fabrication: Pending
-
+![TOP-PCB-3D](Images/TOP-PCB-3D.png)
 
 
 Designed by Muduganti Aman Reddy | Hackclub
