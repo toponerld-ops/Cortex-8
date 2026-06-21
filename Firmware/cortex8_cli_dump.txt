@@ -1,0 +1,145 @@
+# Cortex-8 Betaflight CLI Dump
+# Paste into Betaflight Configurator CLI after flashing firmware
+# STM32H743BIT6 | 8-motor X8 Coaxial | DShot600 Bidir
+
+# ============================================================
+# BOARD
+# ============================================================
+board_name CORTEX8
+manufacturer_id CX8
+
+# ============================================================
+# MOTOR PROTOCOL
+# ============================================================
+set motor_pwm_protocol = DSHOT600
+set use_unsynced_pwm = OFF
+set dshot_bidir = ON
+set motor_poles = 14
+
+# Motor output mapping — X8 Coaxial
+# M1 Front Upper, M2 Front Lower
+# M3 Right Upper, M4 Right Lower
+# M5 Rear Upper,  M6 Rear Lower
+# M7 Left Upper,  M8 Left Lower
+set motor_count = 8
+
+# ============================================================
+# MIXER — X8 Coaxial
+# ============================================================
+mixer OCTOFLATH
+
+# ============================================================
+# GYRO
+# ============================================================
+set gyro_1_sensor_align = CW0
+set gyro_2_sensor_align = CW0
+set gyro_1_bustype = SPI
+set gyro_1_spibus = 1
+set gyro_1_spi_device = 1
+set gyro_2_bustype = SPI
+set gyro_2_spibus = 1
+set gyro_2_spi_device = 2
+
+# ICM-42688-P at 32kHz
+set gyro_hardware_lpf = NORMAL
+set gyro_lowpass_type = PT1
+set gyro_lowpass_hz = 200
+set gyro_lowpass2_type = PT1
+set gyro_lowpass2_hz = 250
+
+# ============================================================
+# BLACKBOX
+# ============================================================
+set blackbox_device = SPIFLASH
+set blackbox_rate_denom = 1
+set blackbox_mode = NORMAL
+
+# ============================================================
+# SERIAL PORTS
+# ============================================================
+# UART1 — ESP32-S3 ELRS
+serial 0 64 115200 57600 0 115200
+
+# UART3 — OpenIPC Camera
+serial 2 0 115200 57600 0 115200
+
+# ============================================================
+# BATTERY
+# ============================================================
+set battery_meter = ADC
+set current_meter = ADC
+set vbat_scale = 110
+set current_meter_scale = 400
+set current_meter_offset = 0
+set ibata_hardware = 1
+
+# 2S parallel default (7.4V), 4S series mode (14.8V)
+set vbat_min_cell_voltage = 330
+set vbat_warning_cell_voltage = 350
+set vbat_max_cell_voltage = 420
+
+# ============================================================
+# RATES (Cortex-8 X8 Racing defaults)
+# ============================================================
+set rates_type = BETAFLIGHT
+set roll_rc_rate = 100
+set pitch_rc_rate = 100
+set yaw_rc_rate = 100
+set roll_expo = 0
+set pitch_expo = 0
+set yaw_expo = 0
+set roll_srate = 70
+set pitch_srate = 70
+set yaw_srate = 70
+
+# ============================================================
+# PID — X8 Coaxial starting point
+# X8 has higher inertia than standard quad — lower I gains
+# ============================================================
+set p_roll = 42
+set i_roll = 85
+set d_roll = 30
+set f_roll = 90
+set p_pitch = 46
+set i_pitch = 90
+set d_pitch = 32
+set f_pitch = 95
+set p_yaw = 45
+set i_yaw = 90
+set d_yaw = 0
+set f_yaw = 90
+
+# Anti gravity
+set anti_gravity_gain = 5000
+
+# ============================================================
+# FEATURES
+# ============================================================
+feature -RX_PPM
+feature -RX_SERIAL
+feature TELEMETRY
+feature LED_STRIP
+feature OSD
+feature -AIRMODE
+feature ANTI_GRAVITY
+
+# ============================================================
+# LED STRIP
+# ============================================================
+# WS2812B on PC11
+# Armed = green, Low battery = orange, Crash = red, Locator = blue
+led 0 0,0::CH:0
+led 1 0,0::CH:0
+led 2 0,0::CH:0
+led 3 0,0::CH:0
+
+color 0 0,0,0
+color 1 0,255,0
+color 2 255,165,0
+color 3 255,0,0
+color 4 0,0,255
+
+# ============================================================
+# SAVE
+# ============================================================
+save

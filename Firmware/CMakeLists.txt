@@ -1,0 +1,13 @@
+target_stm32h743xi(CORTEX8
+    ENABLE_FEATURES
+        DSHOT
+        DSHOT_BITBANG
+        BLACKBOX
+        FLASH_W25Q128FV
+        LED_STRIP
+        OSD
+        TELEMETRY
+        BATTERY_VOLTAGE_SAG_COMPENSATION
+        CURRENT_METER
+        VOLTAGE_METER
+)
