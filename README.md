@@ -212,10 +212,10 @@ The full custom target is available in `/firmware/targets/CORTEX8/`.
 
 | File                  | Purpose                                                  |
 |-----------------------|----------------------------------------------------------|
-| target.h              | Pin definitions — DShot, SPI, UART, I2C, GPIO            |
+| target.h              | Pin definitions DShot, SPI, UART, I2C, GPIO            |
 | target.c              | Timer/DMA assignments for 8-motor DShot600 bidirectional |
 | CMakeLists.txt        | Betaflight build system config                           |
-| cortex8_cli_dump.txt  | CLI preset — paste after first flash                     | 
+| cortex8_cli_dump.txt  | CLI preset paste after first flash                     | 
 
 ## Building the Firmware
 
