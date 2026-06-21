@@ -277,7 +277,7 @@ After flashing, open Betaflight Configurator → CLI tab and paste the contents 
 
 ---
 
-### *Recommended Betaflight Settings**
+### *Recommended Betaflight Settings*
 
 | Setting                 | Value          |
 |-------------------------|----------------|
