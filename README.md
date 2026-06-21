@@ -202,43 +202,96 @@ BOM
 |60 |1       |TYPE-C 16PIN 3MD(385)|USB1                                                                                                                                                                                                                                                                                                                                                                  |USB-C-SMD_TYPE-C16PIN                 |      |TYPE-C 16PIN 3MD(385) |SHOU HAN(首韩)       |C2858270     |LCSC    |0.0193      |28089       |
 
 
-## **Firmware & Flashing Guide**
+# Cortex-8 Firmware
 
-**Cortex-8 uses Betaflight firmware.**
+Cortex-8 runs **Betaflight 4.5.x** on a custom target built for the **STM32H743BIT6**.
 
-### 1. Download Betaflight Configurator
-- Download the latest **Betaflight Configurator** from:  
-  [GitHub Releases](https://github.com/betaflight/betaflight-configurator/releases)
+The full custom target is available in `/firmware/targets/CORTEX8/`.
 
-### 2. Enter DFU / Bootloader Mode
-1. Disconnect all batteries and USB.
-2. connect the board to your PC via USB-C.
-3. The board should now appear as **"STM32 Bootloader"** in Device Manager (Windows) or as a DFU device.
+## Target Files
 
-### 3. Flash Firmware
-1. Open **Betaflight Configurator**.
-2. Go to the **Firmware Flasher** tab.
-3. **Select Target**: 
-   - Start with a generic **STM32H7** target (e.g. `BETAFPVF7` or `H7` generic if available).
-   - For best results, use a **custom target** (we will provide `.json` target file in `/firmware/targets/` soon).
-4. Choose the latest **Betaflight 4.5.x** (or newer) version.
-5. Click **"Load Firmware [Online]"** or **"Load Firmware [Local]"** if using a pre-built HEX.
-6. Click **"Flash Firmware"**.
-7. Wait until you see **"Programming Successful"**.
+| File                  | Purpose                                                  |
+|-----------------------|----------------------------------------------------------|
+| target.h              | Pin definitions — DShot, SPI, UART, I2C, GPIO            |
+| target.c              | Timer/DMA assignments for 8-motor DShot600 bidirectional |
+| CMakeLists.txt        | Betaflight build system config                           |
+| cortex8_cli_dump.txt  | CLI preset — paste after first flash                     | 
 
-### 4. Post-Flash Configuration
-After flashing:
-- Connect to the board normally.
-- Go to **Ports** tab → Enable UARTs for ELRS, GPS, etc.
-- Use **CLI** to run resource remapping if needed for custom pinouts.
-- Load a preset for X8 coaxial configuration.
+## Building the Firmware
 
-**Recommended Settings**:
-- ESC Protocol: **DShot600**
-- Blackbox: Enabled on 128MB flash
-- PID Tuning: Start with Betaflight defaults + X8-specific tweaks
+bash
+# Clone Betaflight
+git clone https://github.com/betaflight/betaflight
+cd betaflight
 
-  ## **How to Build**
+# Copy Cortex-8 target
+cp -r /path/to/Cortex-8/firmware/targets/CORTEX8 src/main/target/CORTEX8
+
+# Build
+make CORTEX8
+The compiled .hex file will appear in the obj/ directory.
+
+
+### **Flashing**
+
+**Via SWD (recommended for first flash):**
+1. Connect ST-Link V2/V3 to the 4-pin 1.27mm SWD header on the top layer
+2. Pin order: VCC — SWDIO — SWCLK — GND
+3. Open STM32CubeProgrammer
+4. Select ST-Link connection → Connect
+5. Open the compiled `.hex` → Program
+
+**Via DFU (subsequent flashes):**
+1. Connect USB-C while holding BOOT0 pad to 3.3V
+2. Board appears as STM32 Bootloader in Device Manager
+3. Open Betaflight Configurator → Firmware Flasher
+4. Load `CORTEX8.hex` → Flash Firmware
+
+---
+
+### **Post-Flash CLI Setup**
+
+After flashing, open Betaflight Configurator → CLI tab and paste the contents of `cortex8_cli_dump.txt`. This configures:
+
+- DShot600 bidirectional on all 8 motors
+- X8 coaxial mixer (OCTOFLATH)
+- ICM-42688-P primary gyro at 32kHz + ICM-20602 backup
+- Blackbox to 128MB QSPI flash
+- WS2812B LED strip on PC11
+- Starting PID tune for X8 coaxial
+
+
+
+### **Motor Mapping**
+
+| Motor | Pin  | Timer    | DMA     | Position     |
+|-------|------|----------|---------|--------------|
+| M1    | PA0  | TIM5_CH1 | DMA1_S0 | Front Upper  |
+| M2    | PA1  | TIM5_CH2 | DMA1_S1 | Front Lower  |
+| M3    | PA2  | TIM5_CH3 | DMA1_S2 | Right Upper  |
+| M4    | PA3  | TIM5_CH4 | DMA1_S3 | Right Lower  |
+| M5    | PB0  | TIM3_CH3 | DMA1_S4 | Rear Upper   |
+| M6    | PB1  | TIM3_CH4 | DMA1_S5 | Rear Lower   |
+| M7    | PE9  | TIM1_CH1 | DMA2_S6 | Left Upper   |
+| M8    | PE11 | TIM1_CH2 | DMA2_S7 | Left Lower   |
+
+---
+
+### *Recommended Betaflight Settings**
+
+| Setting                 | Value          |
+|-------------------------|----------------|
+| ESC Protocol            | DShot600       |
+| Bidirectional DShot     | ON             |
+| Gyro Update Frequency   | 32kHz          |
+| PID Loop Frequency      | 8kHz           |
+| Blackbox Device         | SPI Flash      |
+| Mixer                   | Octoflat H (X8)|
+| Motor Poles             | 14             |
+
+---
+
+## **How to Build**
 
 ### Prerequisites
 
