@@ -19,7 +19,7 @@
 
 This is the **5th generation** of my custom AIO flight controller.
 
-I’m building this because I want to see **how far I can push the limits** of what a single person (with help from AI) can achieve in drone hardware and autonomy.
+I’m building this because I want to see **how far I can push the limits** of what a single person can achieve in drone hardware and autonomy.
 
 My goal is simple yet ambitious:
 - Design high-performance flight controllers from scratch
