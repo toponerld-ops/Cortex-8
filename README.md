@@ -194,52 +194,38 @@ paste the cli dump in and it sets up:
 | Motor Poles | 14 |
  
 basically just match whats in the cli dump and u good.
---- 
 
-# How to Build the Cortex-8 FC 
+---
 
-How to Build One
+### How to Assemble the Cortex-8 FC
+
 What You’ll Need
 
-EasyEDA Pro
-JLCPCB account (for PCB + SMT)
-Hot air station (for QFN/BGA rework)
-ST-Link V3
-USB-C PD charger that supports 20V EPR
-2× 2S LiPo batteries (850mAh+ recommended)
+EasyEDA Pro JLCPCB account (for PCB + SMT) Hot air station (for QFN/BGA rework) ST-Link V3 USB-C PD charger that supports 20V EPR 2× 2S LiPo batteries (recommended 850mAh or more)
 
-Step-by-Step
-1. Order the PCB
-Upload the gerbers from the /gerbers folder to JLCPCB.
-Use these settings:
+# *Step-by-Step*
 
-8 layers, 1.6mm thickness
-ENIG finish
-Outer copper 2oz, inner 1oz/2oz
-Via-in-Pad (POFV — epoxy filled & copper capped) — very important, mention this explicitly in the order notes
-X-Ray inspection + impedance control
+Order the PCB
+Upload the gerbers from the /gerbers folder to JLCPCB. Use these settings:
+8 layers, 1.6mm thickness ENIG finish Outer copper 2oz, inner 1oz/2oz Via-in-Pad (POFV epoxy filled & copper capped) very important.
 
-2. Order Components
-Export the BOM from EasyEDA and use JLCPCB’s SMT service. Double-check stock on the big chips (STM32H743, ESP32-S3, BQ25798, FD6288Q x8, CSD17313Q2 x48, etc.) — they go out of stock fast.
+Order Components
+Export the BOM from EasyEDA and use JLCPCB’s SMT service.
 
-3. Assembly Tips
-The STM32 BGA needs good reflow + X-Ray verification.
-MOSFETs are on the bottom with exposed copper for cooling.
-Gate drivers need solid thermal vias.
-Clean the IMUs thoroughly with IPA after soldering — they hate flux residue.
-Peak reflow temp around 235-245°C for the BGA works well.
+Assembly Tips
+The STM32 BGA needs proper reflow.
 
-4. Flash the Firmware
-First flash via SWD, then you can use DFU for updates. Set the board target as custom STM32H743 in Betaflight.
+Flash the Firmware
+First, flash via SWD, then you can use DFU for updates. Set the board target as custom STM32H743 in Betaflight.
 
-5. Batteries & Power
-Plug in the two 2S LiPos via XT30. The board boots in parallel (7.4V) by default. The STM32 can switch to series (14.8V), but there’s a hardware interlock so you can’t accidentally short the batteries. USB-PD charging is handled automatically.
+Batteries & Power
+Connect the two 2S LiPos using XT30. The board starts in parallel (7.4V) by default. The STM32 can switch to series (14.8V), but there’s a hardware interlock to stop accidental shorting of the batteries. USB-PD charging is handled automatically.
 
-6. Motors
+Motors
 Solder 20AWG silicone wire to the phase pads on the edges (3 pads per motor). Left side = M1/M3/M5/M7, right side = M2/M4/M6/M8.
 
-7. FPV & Extras
-The OpenFPV camera stacks on the 30.5×30.5mm holes. Crash locator uses a small backup battery and sends BLE beacons via the ESP32 when main power is lost.
+FPV & Extras
+The OpenFPV camera fits on the 30.5×30.5mm holes. The crash locator uses a small backup battery and sends BLE beacons via the ESP32 when the main power is lost.
 
 ## **IMAGES**
 
