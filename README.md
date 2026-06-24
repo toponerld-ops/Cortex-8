@@ -202,124 +202,183 @@ paste the cli dump in and it sets up:
 basically just match whats in the cli dump and u good.
 --- 
 
-# How to Build the Cortex-8 FC ( If you wanna kill yourself lol )
- 
-## Get ur stuff together first
- 
-* easyeda pro for the design
-* a jlcpcb account
-* a hot air station bc ur gonna need it for the qfn/bga rework
-* an st-link v2 or v3 for flashing later
-* a usb-c pd charger that can do 20v epr (65w+)
-* 2x 2s lipos (850mah or biggerrr)
-## Step 1 Order the PCB
- 
-go to jlcpcb and set it up as:
- 
+# How to Build the Cortex-8 FC 
+
+## Get Your Stuff Together First
+
+* EasyEDA Pro for designing
+
+* A JLCPCB account
+
+* A hot air station because you will need it for QFN/BGA rework
+
+* An ST-Link. V3 for flashing later
+
+* A USB-C PD charger that can do 20V EPR (65W+)
+
+* 2x 2S LiPo batteries (850mAh or bigger)
+
+## Step 1: Order the PCB
+
+Go to JLCPCB. Set it up like this:
+
 | Setting | Value |
+
 |---|---|
+
 | PCB Layers | 8 |
+
 | PCB Thickness | 1.6mm |
+
 | Surface Finish | ENIG |
-| Outer Copper Weight | 2oz |
+
+| Outer Copper Weight | 2oz
+
 | Inner Copper Weight | 1oz/2oz per stackup |
-| Min Hole Size | 0.2mm |
-| Via-in-Pad | Yes (POFV — epoxy filled, copper capped) |
+
+Min Hole Size | 0.2mm |
+
+Via-in-Pad | Yes (POFV. Epoxy filled, copper capped)
+
 | Impedance Control | Yes |
+
 | X-Ray Inspection | Yes |
+
 | Stackup | Advanced HDI |
- 
-upload ur gerbers from the `/gerbers` folder. the important part — u gotta specify pofv for the bga vias under the stm32 AND the thermal vias under the mosfets, and u have to write this explicitly in the order notes or theyll just do normal vias and ur board wont work right.
- 
-## Step 2 Order the Components
- 
-export the bom out of easyeda pro and upload it to jlcpcb's smt assembly service so they place everything for u. most parts come from lcsc. before u actually pay, double check stock on the big ones:
- 
+
+Upload your gerbers from the `/gerbers` folder. The important part is you have to specify POFV for the BGA vias under the STM32 and the thermal vias under the MOSFETs. You must write this explicitly in the order notes. They will just do normal vias and your board won't work right.
+
+## Step 2: Order the Components
+
+Export the BOM out of Pro and upload it to JLCPCBs SMT assembly service so they place everything for you. Most parts come from LCSC. Before you actually pay, double-check stock on the ones:
+
 | Component | LCSC | Notes |
+
 |---|---|---|
-| STM32H743BIT6 | search | UFBGA-176, verify stock |
-| ESP32-S3-FN8 | search | QFN-56 |
+
+| STM32H743BIT6 | search | UFBGA-176 verify stock |
+
+ESP32-S3-FN8 | search | QFN-56 |
+
 | ICM-42688-P | search | LGA-14 |
+
 | ICM-20602 | search | LGA-16 |
-| FD6288Q | search | x8, gate drivers |
+
+| FD6288Q | search | x8 gate drivers |
+
 | CSD17313Q2 | search | x48, MOSFETs |
-| BQ25798RQMR | search | QFN-29, charger |
+
+BQ25798RQMR | search | QFN-29, charger |
+
 | CH224K | C970725 | USB-PD EPR |
-| W25Q128JW | search | WSON-8, flash |
+
+W25Q128JW | search | WSON-8, flash |
+
 | TPS62840 | search | 3.3V buck |
-| TPS62170 | search | 5V buck |
- 
-these run out a lot and u dont wanna get stuck mid orderrr.
- 
-## Step 3 Assembly (jlcpcb does it, but watch for this)
- 
-**stm32:** needs xray inspection after reflow so they can actually see if the bga balls connected properly underneath. leaded paste reflows it better, peak temp 235-245c for 60-90 sec.
- 
-**the 48 mosfets:** sit on the bottom and get reflowed after the top side. their thermal vias need to be pofv too. theres no soldermask over the fet copper on purpose — its bare copper exposed so it can convection cool. if anything needs rework its hot air at 350c.
- 
-**gate drivers:** qfn on the bottom, exposed pad needs to sit flush on the thermal via array for heat to escape properly.
- 
-**the imus:** super sensitive to flux residue so they get cleaned w ipa right after reflow, and the whole board cant go above 260c peak near them or theyll get damaged.
- 
-## Step 4 Flash the Firmware
- 
-once the board comes back assembled:
- 
-1. connect ur st-link to the 4 pin swd header (1.27mm pitch, top layer)
-2. pinout goes vcc — swdio — swclk — gnd
-3. flash the bootloader first w stm32cubeprogrammer
-4. flash betaflight (or the custom firmware) either through swd again or dfu
-5. in betaflight configurator set:
-   * board target: custom stm32h743
-   * motors: 8, dshot600 bidirectional
-   * gyro: icm-42688-p primary, icm-20602 backup
-   * blackbox: qspi
 
-## Step 5 Hook Up the Battery
- 
-1. plug in 2x 2s lipos via the xt30 connectors on the bottom edge
-2. boots in parallel mode (7.4v) by default
-3. the stm32 handles switching to series (14.8v) thru two gpio pins
-4. theres a hardware interlock that physically blocks both switches from being on at the same time no matter what the firmware does — so even if ur code bugs out it cant short the battery
-5. charging happens over usb-c pd at 20v epr — the ch224k negotiates that voltage automatically and the bq25798 handles the actual charge current over i2c
+|. | Search | 5V buck |
 
-## Step 6 Wire the Motors
- 
-the phase pads are on the board edges:
-* left side: m1, m3, m5, m7 (3 pads each — phase a, b, c)
-* right side: m2, m4, m6, m8 (3 pads each — phase a, b, c)
-solder straight onto them w 20awg silicone wire, pads are 2x3mm so dont try to cram thicker wire in there.
- 
-**x8 motor order looking from top:**
-* m1/m2: front (upper/lower)
-* m3/m4: right (upper/lower)
-* m5/m6: rear (upper/lower)
-* m7/m8: left (upper/lower)
+These run out a lot. You don't want to get stuck mid-order.
 
-## Step 7 Stack the FPV Setup
- 
-the openfpv cam module mounts on top using the 30.5x30.5mm m2 holes, plugs in via a 4 pin jst 1.25mm connector on the top edge, and the wifi adapter goes into the header right next to it.
- 
-## Step 8 Set Up the Crash Locator
- 
-1. wire the 300mah backup battery to the jst 1x2 connector
-2. kicks on automatically the second the main battery disconnects
-3. esp32 sends out a ble beacon every 30 min with last known position
-4. open any ble scanner app to find it
-5. once u plug the drone back into usb-c the backup battery tops itself back up automatically
+## Step 3: Assembly (JLCPCB Does It. Watch For This)
+
+* **STM32:** Needs X-ray inspection after reflow so they can actually see if the BGA balls connected underneath. Leaded paste reflows it better peak temp 235-245C for 60-90 seconds.
+
+* **The 48 MOSFETs:** Sit on the bottom. Get reflowed after the top side. Their thermal vias need to be POFV. There's no soldermask over the FET copper on purpose. It's bare copper exposed so it can convection cool. If anything needs rework it's air at 350C.
+
+* **Gate Drivers:** QFN on the bottom exposed pad needs to sit on the thermal via array for heat to escape properly.
+
+* **The IMUs:** Super sensitive to flux residue so they get cleaned with IPA after reflow and the whole board can't go above 260C peak near them or they'll get damaged.
+
+## Step 4: Flash the Firmware
+
+Once the board comes back assembled:
+
+1. Connect your ST-Link to the 4-pin SWD header (1.27mm pitch, layer).
+
+2. Pinout goes VCC. SWDIO. SWCLK. GND.
+
+3. Flash the bootloader first with STM32CubeProgrammer.
+
+4. Flash Betaflight (. The custom firmware) either through SWD again or DFU.
+
+5. In Betaflight Configurator, set:
+
+* Board target: Custom STM32H743
+
+* Motors: 8, DSHOT600 bidirectional
+
+* Gyro: ICM-42688-P primary, ICM-20602 backup
+
+* Blackbox: QSPI
+
+## Step 5: Hook Up the Battery
+
+1. Plug in 2x 2S LiPo batteries via the XT30 connectors on the edge.
+
+2. Boots in mode (7.4V) by default.
+
+3. The STM32 handles switching to series (14.8V) through two GPIO pins.
+
+4. There's a hardware interlock that physically blocks both switches from being at the same time no matter what the firmware does. So even if your code bugs out it can't short the battery.
+
+5. Charging happens over USB-C PD at 20V EPR. The CH224K negotiates that voltage automatically and the BQ25798 handles the charge current over I2C.
+
+## Step 6: Wire the Motors
+
+The phase pads are on the board edges:
+
+* Left side: M1, M3 M5, M7 (3 pads each. Phase A, B, C)
+
+* Right side: M2, M4, M6, M8 (3 pads each. Phase A, B, C)
+
+Solder onto them with 20AWG silicone wire. Pads are 2x3mm so don't try to cram wire in there.
+
+* **X8 Motor Order Looking from Top:**
+
+* M1/M2: Front (/lower)
+
+* M3/M4: Right (/lower)
+
+* M5/M6: Rear (upper/lower)
+
+* M7/M8: Left (/lower)
+
+## Step 7: Stack the FPV Setup
+
+The OpenFPV cam module mounts on top using the 30.5x30.5mm M2 holes plugs in via a 4-pin JST 1.25mm connector on the top edge and the WiFi adapter goes into the header right next to it.
+
+## Step 8: Set Up the Crash Locator
+
+1. Wire the 300mAh battery to the JST 1x2 connector.
+
+2. Kicks on automatically the second the main battery disconnects.
+
+3. ESP32 sends out a BLE beacon every 30 minutes, with the known position.
+
+4. Open any BLE scanner app to find it.
+
+5. Once you plug the drone back into USB-C the backup battery tops itself back up
+
 ## Troubleshooting
- 
-| Issue | Cause | Fix |
-|---|---|---|
-| boot0 not detected | boot0 floating | check the pulldown resistor |
-| no motors spinning | dshot not configured | check ur timer config (tim5/tim3/tim1) |
-| imu missing | spi routing issue | check the spi traces and cs pins |
-| usb-pd stuck at wrong voltage | ch224k cfg pins | check cfg1/cfg2 high, cfg3 low |
-| wont charge | charge_en stuck high | pull it low via gpio |
-| bga issues | reflow profile off | re-reflow properly |
- 
-thats genuinely the whole build start to finish, just follow it in order lol your gonna die.
 
+Issue | Cause | Fix |
+
+|---|---|---|
+
+| Boot0 not detected | Boot0 floating | Check the pulldown resistor |
+
+| No motors spinning | DSHOT not configured | Check your timer config (TIM5/TIM3/TIM1) |
+
+IMU missing | SPI routing issue | Check the SPI traces and CS pins |
+
+| USB-PD stuck at wrong voltage | CH224K CFG pins | Check CFG1/CFG2 high CFG3 low |
+
+| Won't charge | Charge_EN stuck high | Pull it low via GPIO |
+
+| BGA issues | Reflow profile off | Re-reflow properly |
+
+That's it. Follow these steps carefully.
 
 
 ## **IMAGES**
