@@ -20,7 +20,9 @@ ZINE-Cortex-8
 This is Gen 5 of my custom flight controller journey.
 I keep building these things because I genuinely want to see how far one guy can push drone hardware before reality kicks in. The long-term plan is straightforward: design flight controllers from scratch, cram every possible subsystem onto one tiny board, and eventually move into AI-powered autonomous flight (the "drones that think for themselves" thing is just too cool no Skynet though, promise).
 Cortex-8 is the latest step in that direction a completely over-the-top 8-in-1 All-In-One flight controller built specifically for X8 coaxial FPV racing drones.
-Key Specs
+
+
+## *Features*
 
 MCU: STM32H743 running at 480MHz
 
