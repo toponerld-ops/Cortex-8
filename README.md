@@ -54,8 +54,6 @@ pcb: 61x65mm 8-layer hdi, jlcpcb advanced + enig + xray
 
 <div align="center">
 
-**Built for performance. Engineered for reliability.**
-
 </div>
 
 
