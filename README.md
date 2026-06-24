@@ -17,41 +17,19 @@ ZINE-Cortex-8
 
 ## *Project Visionnnn*
 
-okay so this is gen 5 of my flight controller. like i keep building these things and i genuinely just wanna see how far one (1) guy can push drone hardware before reality stops meeee.
-the plan is kinda simple ngl:
+This is Gen 5 of my custom flight controller journey.
+I keep building these things because I genuinely want to see how far one guy can push drone hardware before reality kicks in. The long-term plan is straightforward: design flight controllers from scratch, cram every possible subsystem onto one tiny board, and eventually move into AI-powered autonomous flight (the "drones that think for themselves" thing is just too cool — no Skynet though, promise).
+Cortex-8 is the latest step in that direction — a completely over-the-top 8-in-1 All-In-One flight controller built specifically for X8 coaxial FPV racing drones.
+Key Specs
 
-build flight controllers from scratchhh
-cram literally every subsystem onto one tiny board
-eventually get into AI autonomous flight bc i think drones that think for themselves is the coolest shi ever (no skynet erm)
-
-i js think machines doing their own thing is peak. this whole project is me messing around w flight control, power systems, fpv, crash recovery and one day Full Robot Sentience™
-Cortex-8 is just the next stepp towards that.
-Overviewww
-so basically Cortex-8 is an 8-in-1 AIO flight controller i built from the ground up for X8 coaxial fpv racing drones (yes i larp as a drone engineer in my free time, no i do not have a union card for thisss).
-literally everything flight control, esc power stage, dual battery setup, usb-pd charging, fpv video, AND a crash locator all crammed onto one 61x65mm 8 layer hdi board. its actually unhinged how much is on thereee.
-
-PCB stuff (boringggg but necessary)
-
-mcu: stm32h743 @ 480mhz
-
-wireless: esp32-s3 (wifi + ble + elrs)
-
-motors: 8, x8 coaxial
-
-battery: 2x 2s lipo, series/parallel switchable
-
-voltage: 7.4v parallel / 14.8v series
-
-max current: 10a continuous per phase
-
-charging: 140w usb-pd 20v epr
-
-blackbox: 128mb qspi
-
-fpv range: 5-6km @ 5ghz
-
-pcb: 61x65mm 8-layer hdi, jlcpcb advanced + enig + xray
-
+MCU: STM32H743 running at 480MHz
+Wireless: ESP32-S3 (WiFi + BLE + ELRS support)
+ESCs: 8x integrated high-current drivers for X8 coaxial setup
+Battery: Dual 2S LiPo with software + hardware switchable series/parallel (7.4V or 14.8V)
+Charging: Up to 140W USB-PD EPR at 20V
+Blackbox: 128MB QSPI flash
+PCB: 61×65mm 8-layer HDI, ENIG finish, X-Ray inspected
+Bonus: Built-in crash locator so you’ll (hopefully) never lose the drone
 "you will never lose this drone" - me
 ---
 
@@ -213,166 +191,48 @@ basically just match whats in the cli dump and u good.
 
 # How to Build the Cortex-8 FC 
 
-## Get Your Stuff Together First
-
-* EasyEDA Pro for designing
-
-* A JLCPCB account
-
-* A hot air station because you will need it for QFN/BGA rework
-
-* An ST-Link. V3 for flashing later
-
-* A USB-C PD charger that can do 20V EPR (65W+)
-
-* 2x 2S LiPo batteries (850mAh or bigger)
-
-## Step 1: Order the PCB
-
-Go to JLCPCB. Set it up like this:
-
-| Setting | Value |
-
-| PCB Layers | 8 |
-
-| PCB Thickness | 1.6mm |
-
-| Surface Finish | ENIG |
-
-| Outer Copper Weight | 2oz
-
-| Inner Copper Weight | 1oz/2oz per stackup |
-
-Min Hole Size | 0.2mm |
-
-Via-in-Pad | Yes (POFV. Epoxy filled, copper capped)
-
-| Impedance Control | Yes |
-
-| X-Ray Inspection | Yes |
-
-| Stackup | Advanced HDI |
-
-Upload your gerbers from the `/gerbers` folder. The important part is you have to specify POFV for the BGA vias under the STM32 and the thermal vias under the MOSFETs. You must write this explicitly in the order notes. They will just do normal vias and your board won't work right.
-
-## Step 2: Order the Components
-
-Export the BOM out of Pro and upload it to JLCPCBs SMT assembly service so they place everything for you. Most parts come from LCSC. Before you actually pay, double-check stock on the ones:
-
-| Component | LCSC | Notes |
-
-| STM32H743BIT6 | search | UFBGA-176 verify stock |
-
-ESP32-S3-FN8 | search | QFN-56 |
-
-| ICM-42688-P | search | LGA-14 |
-
-| ICM-20602 | search | LGA-16 |
-
-| FD6288Q | search | x8 gate drivers |
-
-| CSD17313Q2 | search | x48, MOSFETs |
-
-BQ25798RQMR | search | QFN-29, charger |
-
-| CH224K | C970725 | USB-PD EPR |
-
-W25Q128JW | search | WSON-8, flash |
-
-| TPS62840 | search | 3.3V buck |
-
-|. | Search | 5V buck |
-
-These run out a lot.
-
-## Step 3: Assembly 
-
-* **STM32:** Needs X-ray inspection after reflow so they can actually see if the BGA balls connected underneath. Leaded paste reflows it better peak temp 235-245C for 60-90 seconds.
-
-* **The 48 MOSFETs:** Sit on the bottom. Get reflowed after the top side. Their thermal vias need to be POFV. There's no soldermask over the FET copper on purpose. It's bare copper exposed so it can convection cool. If anything needs rework it's air at 350C.
-
-* **Gate Drivers:** QFN on the bottom exposed pad needs to sit on the thermal via array for heat to escape properly.
-
-* **The IMUs:** Super sensitive to flux residue so they get cleaned with IPA after reflow and the whole board can't go above 260C peak near them or they'll get damaged.
-
-## Step 4: Flash the Firmware
-
-Once the board comes back assembled:
-
-1. Connect your ST-Link to the 4-pin SWD header (1.27mm pitch, layer).
-
-2. Pinout goes VCC. SWDIO. SWCLK. GND.
-
-3. Flash the bootloader first with STM32CubeProgrammer.
-
-4. Flash Betaflight (. The custom firmware) either through SWD again or DFU.
-
-5. In Betaflight Configurator, set:
-
-* Board target: Custom STM32H743
-
-* Motors: 8, DSHOT600 bidirectional
-
-* Gyro: ICM-42688-P primary, ICM-20602 backup
-
-* Blackbox: QSPI
-
-## Step 5: Hook Up the Battery
-
-1. Plug in 2x 2S LiPo batteries via the XT30 connectors on the edge.
-
-2. Boots in mode (7.4V) by default.
-
-3. The STM32 handles switching to series (14.8V) through two GPIO pins.
-
-4. There's a hardware interlock that physically blocks both switches from being at the same time no matter what the firmware does. So even if your code bugs out it can't short the battery.
-
-5. Charging happens over USB-C PD at 20V EPR. The CH224K negotiates that voltage automatically and the BQ25798 handles the charge current over I2C.
-
-## Step 6: Wire the Motors
-
-The phase pads are on the board edges:
-
-* Left side: M1, M3 M5, M7 (3 pads each. Phase A, B, C)
-
-* Right side: M2, M4, M6, M8 (3 pads each. Phase A, B, C)
-
-Solder onto them with 20AWG silicone wire. Pads are 2x3mm so don't try to cram wire in there.
-
-## Step 7: Stack the FPV Setup
-
-The OpenFPV cam module mounts on top using the 30.5x30.5mm M2 holes plugs in via a 4-pin JST 1.25mm connector on the top edge and the WiFi adapter goes into the header right next to it.
-
-## Step 8: Set Up the Crash Locator
-
-1. Wire the 300mAh battery to the JST 1x2 connector.
-
-2. Kicks on automatically the second the main battery disconnects.
-
-3. ESP32 sends out a BLE beacon every 30 minutes, with the known position.
-
-4. Open any BLE scanner app to find it.
-
-5. Once you plug the drone back into USB-C the backup battery tops itself back up
-
-## Troubleshooting
-
-Issue | Cause | Fix |
-
-| Boot0 not detected | Boot0 floating | Check the pulldown resistor |
-
-| No motors spinning | DSHOT not configured | Check your timer config (TIM5/TIM3/TIM1) |
-
-IMU missing | SPI routing issue | Check the SPI traces and CS pins |
-
-| USB-PD stuck at wrong voltage | CH224K CFG pins | Check CFG1/CFG2 high CFG3 low |
-
-| Won't charge | Charge_EN stuck high | Pull it low via GPIO |
-
-| BGA issues | Reflow profile off | Re-reflow properly |
-
-That's it.
-
+How to Build One
+What You’ll Need
+
+EasyEDA Pro
+JLCPCB account (for PCB + SMT)
+Hot air station (for QFN/BGA rework)
+ST-Link V3
+USB-C PD charger that supports 20V EPR
+2× 2S LiPo batteries (850mAh+ recommended)
+
+Step-by-Step
+1. Order the PCB
+Upload the gerbers from the /gerbers folder to JLCPCB.
+Use these settings:
+
+8 layers, 1.6mm thickness
+ENIG finish
+Outer copper 2oz, inner 1oz/2oz
+Via-in-Pad (POFV — epoxy filled & copper capped) — very important, mention this explicitly in the order notes
+X-Ray inspection + impedance control
+
+2. Order Components
+Export the BOM from EasyEDA and use JLCPCB’s SMT service. Double-check stock on the big chips (STM32H743, ESP32-S3, BQ25798, FD6288Q x8, CSD17313Q2 x48, etc.) — they go out of stock fast.
+
+3. Assembly Tips
+The STM32 BGA needs good reflow + X-Ray verification.
+MOSFETs are on the bottom with exposed copper for cooling.
+Gate drivers need solid thermal vias.
+Clean the IMUs thoroughly with IPA after soldering — they hate flux residue.
+Peak reflow temp around 235-245°C for the BGA works well.
+
+4. Flash the Firmware
+First flash via SWD, then you can use DFU for updates. Set the board target as custom STM32H743 in Betaflight.
+
+5. Batteries & Power
+Plug in the two 2S LiPos via XT30. The board boots in parallel (7.4V) by default. The STM32 can switch to series (14.8V), but there’s a hardware interlock so you can’t accidentally short the batteries. USB-PD charging is handled automatically.
+
+6. Motors
+Solder 20AWG silicone wire to the phase pads on the edges (3 pads per motor). Left side = M1/M3/M5/M7, right side = M2/M4/M6/M8.
+
+7. FPV & Extras
+The OpenFPV camera stacks on the 30.5×30.5mm holes. Crash locator uses a small backup battery and sends BLE beacons via the ESP32 when main power is lost.
 
 ## **IMAGES**
 
