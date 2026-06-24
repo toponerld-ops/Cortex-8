@@ -112,89 +112,60 @@ BOM
 |59 |1       |ESP32-S3FN8          |U27                                                                                                                                                                                                                                                                                                                                                                   |QFN-56_L7.0-W7.0-P0.40-TL-EP4.0       |      |ESP32-S3FN8           |ESPRESSIF(乐鑫)      |C2913196     |LCSC    |0.5269      |1714        |
 |60 |1       |TYPE-C 16PIN 3MD(385)|USB1                                                                                                                                                                                                                                                                                                                                                                  |USB-C-SMD_TYPE-C16PIN                 |      |TYPE-C 16PIN 3MD(385) |SHOU HAN(首韩)       |C2858270     |LCSC    |0.0193      |28089       |
 
-
 # Cortex-8 Firmware
- 
-so cortex-8 runs betaflight 4.5.x but on a custom target i built specifically for the stm32h743. the full target lives in `/firmware/targets/CORTEX8/` if u wanna poke around innn.
- 
+
+The Cortex-8 runs on Betaflight 4.5.x, but it features a custom target that I developed specifically for the stm32h743. If you're interested in checking it out, you can find the complete target in /firmware/targets/CORTEX8/.
+
 ## Target Files
- 
-the breakdown real quick:
- 
+
+Here’s a brief summary:
+
 | File | Purpose |
-|---|---|
-| target.h | all the pin definitions, dshot, spi, uart, i2c, gpio, the whole mappp |
-| target.c | timer/dma assignments for the 8 motor dshot600 bidirectional setup |
-| CMakeLists.txt | just the betaflight build config |
-| cortex8_cli_dump.txt | the cli preset u paste in after first flash so u dont gotta tune everything by handddd |
- 
+| target.h | Includes all the pin definitions, dshot, spi, uart, i2c, gpio, the entire map |
+| target.c | Manages timer/dma assignments for the 8 motor dshot600 bidirectional setup |
+| CMakeLists.txt | Contains the Betaflight build configuration |
+| cortex8_cli_dump.txt | The CLI preset to paste in after the first flash, so you don’t have to manually tune everything |
+
 ## Building the Firmware
- 
- bash
+
 # Clone Betaflight
 git clone https://github.com/betaflight/betaflight
 cd betaflight
- 
+
 # Copy Cortex-8 target into the source tree
 cp -r /path/to/Cortex-8/firmware/targets/CORTEX8 src/main/target/CORTEX8
- 
+
 # Build
 make CORTEX8
- 
-the compiled `.hex` pops out in the `obj/` directory after thattt.
- 
-### Flashing
- 
-**via swd (recommended for first flash):**
-1. st-link v2/v3 into the 4 pin 1.27mm swd header on the top layer
-2. pinout is vcc — swdio — swclk — gnd
-3. open stm32cubeprogrammer
-4. connect via st-link
-5. load the hex, hit program
-**via dfu (for any flash after that):**
-1. hold boot0 to 3.3v while plugging in usb-c
-2. board shows up as stm32 bootloader in device manager
-3. open betaflight configurator's firmware flasher
-4. load `CORTEX8.hex`, flash it
-way faster once the bootloader's already on thereee.
- 
-### Post-Flash CLI Setup
- 
-paste the cli dump in and it sets up:
- 
-- dshot600 bidirectional on all 8 motors
-- the x8 coaxial mixer (octoflath)
-- dual gyro config — icm-42688-p primary @ 32khz, icm-20602 backup
-- blackbox routing to the 128mb qspi flash
-- the ws2812b led strip on pc11
-- a starting pid tune so u dont take off feeling like a paper airplaneee
-### Motor Mapping
- 
-| Motor | Pin | Timer | DMA | Position |
-|---|---|---|---|---|
-| M1 | PA0 | TIM5_CH1 | DMA1_S0 | Front Upper |
-| M2 | PA1 | TIM5_CH2 | DMA1_S1 | Front Lower |
-| M3 | PA2 | TIM5_CH3 | DMA1_S2 | Right Upper |
-| M4 | PA3 | TIM5_CH4 | DMA1_S3 | Right Lower |
-| M5 | PB0 | TIM3_CH3 | DMA1_S4 | Rear Upper |
-| M6 | PB1 | TIM3_CH4 | DMA1_S5 | Rear Lower |
-| M7 | PE9 | TIM1_CH1 | DMA2_S6 | Left Upper |
-| M8 | PE11 | TIM1_CH2 | DMA2_S7 | Left Lower |
- 
-### Recommended Betaflight Settings
- 
-| Setting | Value |
-|---|---|
-| ESC Protocol | DShot600 |
-| Bidirectional DShot | ON |
-| Gyro Update Frequency | 32kHz |
-| PID Loop Frequency | 8kHz |
-| Blackbox Device | SPI Flash |
-| Mixer | Octoflat H (X8) |
-| Motor Poles | 14 |
- 
-basically just match whats in the cli dump and u good.
 
+After this, the compiled .hex file will be located in the obj/ directory.
+
+### Flashing
+
+**Using SWD (recommended for the first flash):**
+1. Connect the st-link v2/v3 to the 4 pin 1.27mm SWD header on the top layer.
+2. The pinout is vcc — swdio — swclk — gnd.
+3. Open STM32CubeProgrammer.
+4. Connect via st-link.
+5. Load the hex file and click program.
+
+**Using DFU (for any subsequent flashes):**
+1. Hold boot0 to 3.3v while plugging in USB-C.
+2. The board will appear as STM32 bootloader in Device Manager.
+3. Open Betaflight Configurator's firmware flasher.
+4. Load CORTEX8.hex and flash it.
+It’s much faster once the bootloader is already installed.
+
+### Post-Flash CLI Setup
+
+Paste the CLI dump in, and it will set up:
+
+- Dshot600 bidirectional for all 8 motors
+- The x8 coaxial mixer (octoflath)
+- Dual gyro configuration ICM-42688-P primary @ 32kHz, ICM-20602 backup
+- Blackbox routing to the 128MB QSPI flash
+- The WS2812B LED strip on PC11
+- An initial PID tune so you don’t take off feeling like a paper airplane.
 ---
 
 ### How to Assemble the Cortex-8 FC
