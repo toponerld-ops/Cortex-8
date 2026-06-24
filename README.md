@@ -33,14 +33,23 @@ literally everything flight control, esc power stage, dual battery setup, usb-pd
 PCB stuff (boringggg but necessary)
 
 mcu: stm32h743 @ 480mhz
+
 wireless: esp32-s3 (wifi + ble + elrs)
+
 motors: 8, x8 coaxial
+
 battery: 2x 2s lipo, series/parallel switchable
+
 voltage: 7.4v parallel / 14.8v series
+
 max current: 10a continuous per phase
+
 charging: 140w usb-pd 20v epr
+
 blackbox: 128mb qspi
+
 fpv range: 5-6km @ 5ghz
+
 pcb: 61x65mm 8-layer hdi, jlcpcb advanced + enig + xray
 
 "you will never lose this drone" - me
