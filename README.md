@@ -21,116 +21,35 @@ ZINE-Cortex-8
 ![ZINE](Images/ZINE-Cortex-8.png)
 
 
-## **Project Vision**
+## *Project Visionnnn*
 
-This is the **5th generation** of my custom AIO flight controller.
+okay so this is gen 5 of my flight controller. like i keep building these things and i genuinely just wanna see how far one (1) guy can push drone hardware before reality stops meeee.
+the plan is kinda simple ngl:
 
-I’m building this because I want to see **how far I can push the limits** of what a single person can achieve in drone hardware and autonomy.
+build flight controllers from scratchhh
+cram literally every subsystem onto one tiny board
+eventually get into AI autonomous flight bc i think drones that think for themselves is the coolest shi ever (no skynet erm)
 
-My goal is simple yet ambitious:
-- Design high-performance flight controllers from scratch
-- Fully integrate every subsystem onto one compact board
-- Explore **AI-driven autonomous flight** — drones that can think and react on their own without human intervention
+i js think machines doing their own thing is peak. this whole project is me messing around w flight control, power systems, fpv, crash recovery and one day Full Robot Sentience™
+Cortex-8 is just the next stepp towards that.
+Overviewww
+so basically Cortex-8 is an 8-in-1 AIO flight controller i built from the ground up for X8 coaxial fpv racing drones (yes i larp as a drone engineer in my free time, no i do not have a union card for thisss).
+literally everything flight control, esc power stage, dual battery setup, usb-pd charging, fpv video, AND a crash locator all crammed onto one 61x65mm 8 layer hdi board. its actually unhinged how much is on thereee.
 
-I’ve always been fascinated by machines that work independently. This project is my playground to experiment with advanced flight control, power systems, digital FPV, crash recovery, and eventually full AI autonomy.
+PCB stuff (boringggg but necessary)
 
-**Cortex-8** is another step toward that vision.
+mcu: stm32h743 @ 480mhz
+wireless: esp32-s3 (wifi + ble + elrs)
+motors: 8, x8 coaxial
+battery: 2x 2s lipo, series/parallel switchable
+voltage: 7.4v parallel / 14.8v series
+max current: 10a continuous per phase
+charging: 140w usb-pd 20v epr
+blackbox: 128mb qspi
+fpv range: 5-6km @ 5ghz
+pcb: 61x65mm 8-layer hdi, jlcpcb advanced + enig + xray
 
-## **Overview**
-
-Cortex-8 is a **custom 8-in-1 all-in-one flight controller** designed from scratch for high-performance X8 coaxial FPV racing drones.
-
-Every subsystem — flight control, ESC power stage, dual battery matrix, USB-PD charging, digital FPV video, and **emergency crash locator** — lives on a **single 61×65mm 8-layer HDI PCB**.
-
-> **"You will never lose this drone."**
-
----
-
-## **Key Features**
-
-### **Flight Control**
-- **STM32H743BIT6** @ 480MHz with hardware crypto
-- Full **8-motor X8 coaxial** support with **DShot600** bidirectional (conflict-free)
-- **Dual IMU** — ICM-42688-P (32kHz) + ICM-20602 backup
-- **128MB QSPI Blackbox** with wear leveling
-- Temperature-compensated **16MHz TCXO**
-- **ESP32-S3** for ELRS + Wi-Fi/BLE
-
-### **Dual Battery Matrix**
-- Switch between **7.4V (parallel)** and **14.8V (series)** in flight
-- Hardware (AND gate + inverter) interlock prevents short circuits
-- TLV3201 comparator disables switching above 30A
-- Ideal diode protection + pre-charge soft-start
-- Mid-flight balancing
-
-### **Octo-ESC Power Stage**
-- 8× dedicated **FD6288Q** gate drivers
-- 48× **CSD17313Q2** MOSFETs (**10A continuous** per phase)
-- 2× **INA240A2** current sensors with Kelvin-connected shunts
-- Snubber capacitors on every motor phase
-- High-side current sensing with PWM rejection
-
-### **Power & Charging**
-- Dual high-efficiency bucks
-- **TPS62840** 3.3V/2A buck for STM32 & IMUs
-- **TPS62170** 5V/2A buck for ESP32 & peripherals
-- **140W USB-PD** (20V EPR) fast charging
-- Filtered rail for OpenFPV camera
-
-### **Digital FPV**
-- **OpenFPV** system: **SSC338Q + IMX415** camera
-- **BL-M8812EU2** (RTL8812EU, **29dBm**) 5GHz Wi-Fi adapter
-- **Up to 5–6km** range with PixelPilot ground station
-
-### **Hardware Safety Systems**
-- **Hardware arming inhibit** via JST-GH safety switch (kills all 8 gate driver EN pins)
-- **WWDG + IWDG** dual watchdog
-- **WS2812B** RGB LED status + passive buzzer
-- **Emergency Crash Locator** with 300mAh backup LiPo + BLE SOS beacon (48+ hours)
-
----
-
-## **PCB Design**
-
-**61×65mm • 8-layer HDI • Via-in-Pad • JLCPCB Advanced**
-
-**Layer Stackup:**
-
-| Layer | Purpose                        | Copper |
-|-------|--------------------------------|--------|
-| L1    | Signals + Components           | 2oz    |
-| L2    | DShot signals                  | 1oz    |
-| L3    | Clean DGND                     | 1oz    |
-| L4    | VBAT_PRIMARY (Power)           | 2oz    |
-| L5    | Dirty ESC GND                  | 2oz    |
-| L6    | Shielding                      | 2oz    |
-| L7    | Analog GND                     | 1oz    |
-| L8    | MOSFETs + Drivers              | 2oz    |
-
----
-
-## **Key Specs**
-
-| Parameter              | Value                                      |
-|------------------------|--------------------------------------------|
-| **MCU**                | STM32H743BIT6 @ 480MHz                     |
-| **Wireless**           | ESP32-S3 (Wi-Fi + BLE + ELRS)              |
-| **Motors**             | 8 (X8 Coaxial)                             |
-| **Battery**            | 2× 2S LiPo (Series/Parallel switchable)    |
-| **Voltage Modes**      | 7.4V (parallel) / 14.8V (series)           |
-| **Max Current**        | 10A continuous per phase                   |
-| **Charging**           | 140W USB-PD (20V EPR)                      |
-| **Blackbox**           | 128MB QSPI Flash                           |
-| **FPV**                | OpenFPV (SSC338Q + IMX415)                 |
-| **Video Range**        | 5–6km @ 5GHz                               |
-| **PCB Size**           | 61×65mm                                    |
-| **Layers**             | 8-layer HDI                                |
-| **Stack**              | 30.5×30.5mm M2                             |
-| **Fabrication**        | JLCPCB Advanced + ENIG + X-ray             |
----
-
-**Need help?** Open an issue or join the discussion!
-
+"you will never lose this drone" - me
 ---
 
 <div align="center">
@@ -209,215 +128,203 @@ BOM
 
 
 # Cortex-8 Firmware
-
-Cortex-8 runs **Betaflight 4.5.x** on a custom target built for the **STM32H743BIT6**.
-
-The full custom target is available in `/firmware/targets/CORTEX8/`.
-
+ 
+so cortex-8 runs betaflight 4.5.x but on a custom target i built specifically for the stm32h743. the full target lives in `/firmware/targets/CORTEX8/` if u wanna poke around innn.
+ 
 ## Target Files
-
-| File                  | Purpose                                                  |
-|-----------------------|----------------------------------------------------------|
-| target.h              | Pin definitions DShot, SPI, UART, I2C, GPIO            |
-| target.c              | Timer/DMA assignments for 8-motor DShot600 bidirectional |
-| CMakeLists.txt        | Betaflight build system config                           |
-| cortex8_cli_dump.txt  | CLI preset paste after first flash                     | 
-
+ 
+the breakdown real quick:
+ 
+| File | Purpose |
+|---|---|
+| target.h | all the pin definitions, dshot, spi, uart, i2c, gpio, the whole mappp |
+| target.c | timer/dma assignments for the 8 motor dshot600 bidirectional setup |
+| CMakeLists.txt | just the betaflight build config |
+| cortex8_cli_dump.txt | the cli preset u paste in after first flash so u dont gotta tune everything by handddd |
+ 
 ## Building the Firmware
-
-bash
+ 
+ bash
 # Clone Betaflight
 git clone https://github.com/betaflight/betaflight
 cd betaflight
-
-# Copy Cortex-8 target
+ 
+# Copy Cortex-8 target into the source tree
 cp -r /path/to/Cortex-8/firmware/targets/CORTEX8 src/main/target/CORTEX8
-
+ 
 # Build
 make CORTEX8
-The compiled .hex file will appear in the obj/ directory.
+ 
+the compiled `.hex` pops out in the `obj/` directory after thattt.
+ 
+### Flashing
+ 
+**via swd (recommended for first flash):**
+1. st-link v2/v3 into the 4 pin 1.27mm swd header on the top layer
+2. pinout is vcc — swdio — swclk — gnd
+3. open stm32cubeprogrammer
+4. connect via st-link
+5. load the hex, hit program
+**via dfu (for any flash after that):**
+1. hold boot0 to 3.3v while plugging in usb-c
+2. board shows up as stm32 bootloader in device manager
+3. open betaflight configurator's firmware flasher
+4. load `CORTEX8.hex`, flash it
+way faster once the bootloader's already on thereee.
+ 
+### Post-Flash CLI Setup
+ 
+paste the cli dump in and it sets up:
+ 
+- dshot600 bidirectional on all 8 motors
+- the x8 coaxial mixer (octoflath)
+- dual gyro config — icm-42688-p primary @ 32khz, icm-20602 backup
+- blackbox routing to the 128mb qspi flash
+- the ws2812b led strip on pc11
+- a starting pid tune so u dont take off feeling like a paper airplaneee
+### Motor Mapping
+ 
+| Motor | Pin | Timer | DMA | Position |
+|---|---|---|---|---|
+| M1 | PA0 | TIM5_CH1 | DMA1_S0 | Front Upper |
+| M2 | PA1 | TIM5_CH2 | DMA1_S1 | Front Lower |
+| M3 | PA2 | TIM5_CH3 | DMA1_S2 | Right Upper |
+| M4 | PA3 | TIM5_CH4 | DMA1_S3 | Right Lower |
+| M5 | PB0 | TIM3_CH3 | DMA1_S4 | Rear Upper |
+| M6 | PB1 | TIM3_CH4 | DMA1_S5 | Rear Lower |
+| M7 | PE9 | TIM1_CH1 | DMA2_S6 | Left Upper |
+| M8 | PE11 | TIM1_CH2 | DMA2_S7 | Left Lower |
+ 
+### Recommended Betaflight Settings
+ 
+| Setting | Value |
+|---|---|
+| ESC Protocol | DShot600 |
+| Bidirectional DShot | ON |
+| Gyro Update Frequency | 32kHz |
+| PID Loop Frequency | 8kHz |
+| Blackbox Device | SPI Flash |
+| Mixer | Octoflat H (X8) |
+| Motor Poles | 14 |
+ 
+basically just match whats in the cli dump and u good.
+--- 
 
+# How to Build the Cortex-8 FC ( If you wanna kill yourself lol )
+ 
+## Get ur stuff together first
+ 
+* easyeda pro for the design
+* a jlcpcb account
+* a hot air station bc ur gonna need it for the qfn/bga rework
+* an st-link v2 or v3 for flashing later
+* a usb-c pd charger that can do 20v epr (65w+)
+* 2x 2s lipos (850mah or biggerrr)
+## Step 1 — Order the PCB
+ 
+go to jlcpcb and set it up as:
+ 
+| Setting | Value |
+|---|---|
+| PCB Layers | 8 |
+| PCB Thickness | 1.6mm |
+| Surface Finish | ENIG |
+| Outer Copper Weight | 2oz |
+| Inner Copper Weight | 1oz/2oz per stackup |
+| Min Hole Size | 0.2mm |
+| Via-in-Pad | Yes (POFV — epoxy filled, copper capped) |
+| Impedance Control | Yes |
+| X-Ray Inspection | Yes |
+| Stackup | Advanced HDI |
+ 
+upload ur gerbers from the `/gerbers` folder. the important part — u gotta specify pofv for the bga vias under the stm32 AND the thermal vias under the mosfets, and u have to write this explicitly in the order notes or theyll just do normal vias and ur board wont work right.
+ 
+## Step 2 — Order the Components
+ 
+export the bom out of easyeda pro and upload it to jlcpcb's smt assembly service so they place everything for u. most parts come from lcsc. before u actually pay, double check stock on the big ones:
+ 
+| Component | LCSC | Notes |
+|---|---|---|
+| STM32H743BIT6 | search | UFBGA-176, verify stock |
+| ESP32-S3-FN8 | search | QFN-56 |
+| ICM-42688-P | search | LGA-14 |
+| ICM-20602 | search | LGA-16 |
+| FD6288Q | search | x8, gate drivers |
+| CSD17313Q2 | search | x48, MOSFETs |
+| BQ25798RQMR | search | QFN-29, charger |
+| CH224K | C970725 | USB-PD EPR |
+| W25Q128JW | search | WSON-8, flash |
+| TPS62840 | search | 3.3V buck |
+| TPS62170 | search | 5V buck |
+ 
+these run out a lot and u dont wanna get stuck mid orderrr.
+ 
+## Step 3 — Assembly (jlcpcb does it, but watch for this)
+ 
+**stm32:** needs xray inspection after reflow so they can actually see if the bga balls connected properly underneath. leaded paste reflows it better, peak temp 235-245c for 60-90 sec.
+ 
+**the 48 mosfets:** sit on the bottom and get reflowed after the top side. their thermal vias need to be pofv too. theres no soldermask over the fet copper on purpose — its bare copper exposed so it can convection cool. if anything needs rework its hot air at 350c.
+ 
+**gate drivers:** qfn on the bottom, exposed pad needs to sit flush on the thermal via array for heat to escape properly.
+ 
+**the imus:** super sensitive to flux residue so they get cleaned w ipa right after reflow, and the whole board cant go above 260c peak near them or theyll get damaged.
+ 
+## Step 4 — Flash the Firmware
+ 
+once the board comes back assembled:
+ 
+1. connect ur st-link to the 4 pin swd header (1.27mm pitch, top layer)
+2. pinout goes vcc — swdio — swclk — gnd
+3. flash the bootloader first w stm32cubeprogrammer
+4. flash betaflight (or the custom firmware) either through swd again or dfu
+5. in betaflight configurator set:
+   * board target: custom stm32h743
+   * motors: 8, dshot600 bidirectional
+   * gyro: icm-42688-p primary, icm-20602 backup
+   * blackbox: qspi
 
-### **Flashing**
-
-**Via SWD (recommended for first flash):**
-1. Connect ST-Link V2/V3 to the 4-pin 1.27mm SWD header on the top layer
-2. Pin order: VCC — SWDIO — SWCLK — GND
-3. Open STM32CubeProgrammer
-4. Select ST-Link connection → Connect
-5. Open the compiled `.hex` → Program
-
-**Via DFU (subsequent flashes):**
-1. Connect USB-C while holding BOOT0 pad to 3.3V
-2. Board appears as STM32 Bootloader in Device Manager
-3. Open Betaflight Configurator → Firmware Flasher
-4. Load `CORTEX8.hex` → Flash Firmware
-
----
-
-### **Post-Flash CLI Setup**
-
-After flashing, open Betaflight Configurator → CLI tab and paste the contents of `cortex8_cli_dump.txt`. This configures:
-
-- DShot600 bidirectional on all 8 motors
-- X8 coaxial mixer (OCTOFLATH)
-- ICM-42688-P primary gyro at 32kHz + ICM-20602 backup
-- Blackbox to 128MB QSPI flash
-- WS2812B LED strip on PC11
-- Starting PID tune for X8 coaxial
-
-
-
-### **Motor Mapping**
-
-| Motor | Pin  | Timer    | DMA     | Position     |
-|-------|------|----------|---------|--------------|
-| M1    | PA0  | TIM5_CH1 | DMA1_S0 | Front Upper  |
-| M2    | PA1  | TIM5_CH2 | DMA1_S1 | Front Lower  |
-| M3    | PA2  | TIM5_CH3 | DMA1_S2 | Right Upper  |
-| M4    | PA3  | TIM5_CH4 | DMA1_S3 | Right Lower  |
-| M5    | PB0  | TIM3_CH3 | DMA1_S4 | Rear Upper   |
-| M6    | PB1  | TIM3_CH4 | DMA1_S5 | Rear Lower   |
-| M7    | PE9  | TIM1_CH1 | DMA2_S6 | Left Upper   |
-| M8    | PE11 | TIM1_CH2 | DMA2_S7 | Left Lower   |
-
----
-
-### *Recommended Betaflight Settings*
-
-| Setting                 | Value          |
-|-------------------------|----------------|
-| ESC Protocol            | DShot600       |
-| Bidirectional DShot     | ON             |
-| Gyro Update Frequency   | 32kHz          |
-| PID Loop Frequency      | 8kHz           |
-| Blackbox Device         | SPI Flash      |
-| Mixer                   | Octoflat H (X8)|
-| Motor Poles             | 14             |
-
----
-
-## **How to Build**
-
-### Prerequisites
-
-* EasyEDA Pro (schematic + PCB design)
-* JLCPCB account for fabrication and assembly
-* Soldering station with hot air (for QFN/BGA rework)
-* ST-Link V2 or V3 for STM32 firmware flashing
-* USB-C PD charger supporting 20V EPR (65W+)
-* 2x 2S LiPo batteries (850mAh+ recommended)
-
-### Step 1 — Order PCB from JLCPCB
-Use the following settings when ordering:
-
-| Setting              | Value                                      |
-|----------------------|--------------------------------------------|
-| PCB Layers           | 8                                          |
-| PCB Thickness        | 1.6mm                                      |
-| Surface Finish       | ENIG                                       |
-| Outer Copper Weight  | 2oz                                        |
-| Inner Copper Weight  | 1oz/2oz per stackup                        |
-| Min Hole Size        | 0.2mm                                      |
-| Via-in-Pad           | Yes (POFV — epoxy filled, copper capped)   |
-| Impedance Control    | Yes                                        |
-| X-Ray Inspection     | Yes                                        |
-| Stackup              | Advanced HDI                               |
-
-Upload the Gerber files from the /gerbers folder. Specify POFV for all BGA vias under the STM32 and all thermal vias under the MOSFETs — this must be called out explicitly in the order notes.
-
-### Step 2 — Order Components
-Export the BOM from EasyEDA Pro (Export → BOM) and upload to JLCPCB SMT Assembly. Most components are sourced from LCSC. Key parts to verify stock before ordering:
-
-| Component            | LCSC       | Notes                              |
-|----------------------|------------|------------------------------------|
-| STM32H743BIT6        | search     | UFBGA-176, verify stock            |
-| ESP32-S3-FN8         | search     | QFN-56                             |
-| ICM-42688-P          | search     | LGA-14                             |
-| ICM-20602            | search     | LGA-16                             |
-| FD6288Q              | search     | x8, gate drivers                   |
-| CSD17313Q2           | search     | x48, MOSFETs                       |
-| BQ25798RQMR          | search     | QFN-29, charger                    |
-| CH224K               | C970725    | USB-PD EPR                         |
-| W25Q128JW            | search     | WSON-8, flash                      |
-| TPS62840             | search     | 3.3V buck                          |
-| TPS62170             | search     | 5V buck                            |
-
-### Step 3 — Assembly Notes
-**STM32H743BIT6 (UFBGA-176):**
-* Requires X-ray inspection after reflow to verify BGA ball connections
-* All via-in-pad under BGA must be POFV before assembly
-* Use leaded solder paste for better BGA reflow results
-* Reflow profile: peak 235-245C, 60-90 seconds above liquidus
-
-**MOSFETs (CSD17313Q2 x48):**
-* Bottom layer, assembled after top layer reflow
-* Thermal vias must be POFV before assembly
-* No soldermask over FET copper areas -- bare copper exposed for convection cooling
-* Use hot air at 350C for rework
-
-**FD6288Q gate drivers:**
-* QFN package, bottom layer
-* Exposed pad must make solid contact with thermal via array
-
-**ICM-42688-P and ICM-20602:**
-* LGA packages, very sensitive to flux residue
-* Clean thoroughly with IPA after reflow
-* Do not use excessive heat -- 260C peak max
-
-### Step 4 — Firmware Setup
-1. Connect ST-Link V2/V3 to the 4-pin SWD header (1.27mm pitch, top layer)
-2. Pin order: VCC -- SWDIO -- SWCLK -- GND
-3. Flash bootloader using STM32CubeProgrammer
-4. Build and flash Betaflight or custom firmware via STM32CubeProgrammer or DFU
-5. Configure in Betaflight Configurator:
-   * Board target: custom (STM32H743)
-   * Motors: 8, DShot600 bidirectional
-   * Gyro: ICM-42688-P primary, ICM-20602 backup
-   * Blackbox: QSPI flash
-
-### Step 5 — Battery and Power
-1. Connect 2x 2S LiPo via XT30 connectors on bottom edge
-2. Default mode on power-up: 2S parallel (7.4V)
-3. STM32 controls series/parallel switching via PARALLEL_EN and SERIES_EN GPIOs
-4. Hardware interlock prevents both switches activating simultaneously regardless of firmware
-5. Charge via USB-C PD (20V EPR) -- CH224K negotiates voltage automatically, BQ25798 manages charge current via I2C
-
-### Step 6 — Motor Wiring
-Motor phase pads are on the board edges:
-* Left edge: M1, M3, M5, M7 (3 pads each -- Phase A, B, C)
-* Right edge: M2, M4, M6, M8 (3 pads each -- Phase A, B, C)
-
-Solder motor wires directly to pads. Pad size is 2x3mm -- use 20AWG silicone wire for motor connections.
-
-**X8 coaxial motor order (looking from top):**
-* M1/M2: Front motors (upper/lower)
-* M3/M4: Right motors (upper/lower)
-* M5/M6: Rear motors (upper/lower)
-* M7/M8: Left motors (upper/lower)
-
-### Step 7 — OpenFPV Stack
-Stack the OpenFPV camera module (SSC338Q + IMX415) on top using the 30.5x30.5mm M2 mounting holes. Connect via the 4-pin JST 1.25mm connector on the top edge. BL-M8812EU2 WiFi adapter connects via the adjacent header.
-
-### Step 8 — Crash Locator Setup
-1. Connect 300mAh 1S LiPo to JST 1x2 connector (backup battery)
-2. The crash locator activates automatically when main battery disconnects
-3. ESP32 broadcasts BLE beacon every 30 minutes with last known position
-4. Use any BLE scanner app on Android/iOS to locate the drone
-5. Backup battery charges automatically via USB-C when drone is recovered
-
-### Troubleshooting
-
-| Issue                              | Cause                        | Fix                                              |
-|------------------------------------|------------------------------|--------------------------------------------------|
-| STM32 not detected by ST-Link      | BOOT0 floating               | Check 10k pull-down on BOOT0                     |
-| No motor response                  | DShot not configured         | Verify TIM5/TIM3/TIM1 in firmware                |
-| IMU not detected                   | SPI routing issue            | Check SPI1 traces, verify CS pins                |
-| USB-PD not negotiating 20V         | CH224K CFG pins              | Verify CFG1/CFG2 HIGH, CFG3 LOW                  |
-| Charging not starting              | CHARGE_EN stuck high         | Pull CHARGE_EN low via STM32 GPIO                |
-| BGA cold joints                    | Reflow profile               | Re-reflow with proper temperature curve          |
-
----
+## Step 5 — Hook Up the Battery
+ 
+1. plug in 2x 2s lipos via the xt30 connectors on the bottom edge
+2. boots in parallel mode (7.4v) by default
+3. the stm32 handles switching to series (14.8v) thru two gpio pins
+4. theres a hardware interlock that physically blocks both switches from being on at the same time no matter what the firmware does — so even if ur code bugs out it cant short the battery
+5. charging happens over usb-c pd at 20v epr — the ch224k negotiates that voltage automatically and the bq25798 handles the actual charge current over i2c
+## Step 6 — Wire the Motors
+ 
+the phase pads are on the board edges:
+* left side: m1, m3, m5, m7 (3 pads each — phase a, b, c)
+* right side: m2, m4, m6, m8 (3 pads each — phase a, b, c)
+solder straight onto them w 20awg silicone wire, pads are 2x3mm so dont try to cram thicker wire in there.
+ 
+**x8 motor order looking from top:**
+* m1/m2: front (upper/lower)
+* m3/m4: right (upper/lower)
+* m5/m6: rear (upper/lower)
+* m7/m8: left (upper/lower)
+## Step 7 — Stack the FPV Setup
+ 
+the openfpv cam module mounts on top using the 30.5x30.5mm m2 holes, plugs in via a 4 pin jst 1.25mm connector on the top edge, and the wifi adapter goes into the header right next to it.
+ 
+## Step 8 — Set Up the Crash Locator
+ 
+1. wire the 300mah backup battery to the jst 1x2 connector
+2. kicks on automatically the second the main battery disconnects
+3. esp32 sends out a ble beacon every 30 min with last known position
+4. open any ble scanner app to find it
+5. once u plug the drone back into usb-c the backup battery tops itself back up automatically
+## Troubleshooting
+ 
+| Issue | Cause | Fix |
+|---|---|---|
+| boot0 not detected | boot0 floating | check the pulldown resistor |
+| no motors spinning | dshot not configured | check ur timer config (tim5/tim3/tim1) |
+| imu missing | spi routing issue | check the spi traces and cs pins |
+| usb-pd stuck at wrong voltage | ch224k cfg pins | check cfg1/cfg2 high, cfg3 low |
+| wont charge | charge_en stuck high | pull it low via gpio |
+| bga issues | reflow profile off | re-reflow properly |
+ 
+thats genuinely the whole build start to finish, just follow it in order lol your gonna die.
 
 
 
