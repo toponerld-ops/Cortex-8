@@ -224,8 +224,6 @@ Go to JLCPCB. Set it up like this:
 
 | Setting | Value |
 
-|---|---|
-
 | PCB Layers | 8 |
 
 | PCB Thickness | 1.6mm |
@@ -254,8 +252,6 @@ Export the BOM out of Pro and upload it to JLCPCBs SMT assembly service so they 
 
 | Component | LCSC | Notes |
 
-|---|---|---|
-
 | STM32H743BIT6 | search | UFBGA-176 verify stock |
 
 ESP32-S3-FN8 | search | QFN-56 |
@@ -278,9 +274,9 @@ W25Q128JW | search | WSON-8, flash |
 
 |. | Search | 5V buck |
 
-These run out a lot. You don't want to get stuck mid-order.
+These run out a lot.
 
-## Step 3: Assembly (JLCPCB Does It. Watch For This)
+## Step 3: Assembly 
 
 * **STM32:** Needs X-ray inspection after reflow so they can actually see if the BGA balls connected underneath. Leaded paste reflows it better peak temp 235-245C for 60-90 seconds.
 
@@ -334,16 +330,6 @@ The phase pads are on the board edges:
 
 Solder onto them with 20AWG silicone wire. Pads are 2x3mm so don't try to cram wire in there.
 
-* **X8 Motor Order Looking from Top:**
-
-* M1/M2: Front (/lower)
-
-* M3/M4: Right (/lower)
-
-* M5/M6: Rear (upper/lower)
-
-* M7/M8: Left (/lower)
-
 ## Step 7: Stack the FPV Setup
 
 The OpenFPV cam module mounts on top using the 30.5x30.5mm M2 holes plugs in via a 4-pin JST 1.25mm connector on the top edge and the WiFi adapter goes into the header right next to it.
@@ -364,8 +350,6 @@ The OpenFPV cam module mounts on top using the 30.5x30.5mm M2 holes plugs in via
 
 Issue | Cause | Fix |
 
-|---|---|---|
-
 | Boot0 not detected | Boot0 floating | Check the pulldown resistor |
 
 | No motors spinning | DSHOT not configured | Check your timer config (TIM5/TIM3/TIM1) |
@@ -378,12 +362,10 @@ IMU missing | SPI routing issue | Check the SPI traces and CS pins |
 
 | BGA issues | Reflow profile off | Re-reflow properly |
 
-That's it. Follow these steps carefully.
+That's it.
 
 
 ## **IMAGES**
-
-
 
 TOP PCB 3D
 
