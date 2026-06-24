@@ -116,17 +116,7 @@ BOM
 
 The Cortex-8 runs on Betaflight 4.5.x, but it features a custom target that I developed specifically for the stm32h743. If you're interested in checking it out, you can find the complete target in /firmware/targets/CORTEX8/.
 
-## Target Files
-
-Here’s a brief summary:
-
-| File | Purpose |
-| target.h | Includes all the pin definitions, dshot, spi, uart, i2c, gpio, the entire map |
-| target.c | Manages timer/dma assignments for the 8 motor dshot600 bidirectional setup |
-| CMakeLists.txt | Contains the Betaflight build configuration |
-| cortex8_cli_dump.txt | The CLI preset to paste in after the first flash, so you don’t have to manually tune everything |
-
-## Building the Firmware
+## Building the Firmware (For Windows)
 
 # Clone Betaflight
 git clone https://github.com/betaflight/betaflight
@@ -155,47 +145,30 @@ After this, the compiled .hex file will be located in the obj/ directory.
 3. Open Betaflight Configurator's firmware flasher.
 4. Load CORTEX8.hex and flash it.
 It’s much faster once the bootloader is already installed.
-
-### Post-Flash CLI Setup
-
-Paste the CLI dump in, and it will set up:
-
-- Dshot600 bidirectional for all 8 motors
-- The x8 coaxial mixer (octoflath)
-- Dual gyro configuration ICM-42688-P primary @ 32kHz, ICM-20602 backup
-- Blackbox routing to the 128MB QSPI flash
-- The WS2812B LED strip on PC11
-- An initial PID tune so you don’t take off feeling like a paper airplane.
 ---
 
 ### How to Assemble the Cortex-8 FC
 
-What You’ll Need
-
-EasyEDA Pro JLCPCB account (for PCB + SMT) Hot air station (for QFN/BGA rework) ST-Link V3 USB-C PD charger that supports 20V EPR 2× 2S LiPo batteries (recommended 850mAh or more)
-
 # *Step-by-Step*
 
-Order the PCB
-Upload the gerbers from the /gerbers folder to JLCPCB. Use these settings:
-8 layers, 1.6mm thickness ENIG finish Outer copper 2oz, inner 1oz/2oz Via-in-Pad (POFV epoxy filled & copper capped) very important.
+Manufacture the PCB,
+Upload the gerbers from the /gerbers folder to JLCPCB.
 
-Order Components
-Export the BOM from EasyEDA and use JLCPCB’s SMT service.
+Order Components,
+Order the components using BOM provided.
 
-Assembly Tips
-The STM32 BGA needs proper reflow.
+Flash the Firmware,
+First, connect the SWD pins of the STM32 to a FTDI flasher. flash via SWD, then you can use DFU for updates. Set the board target as custom STM32H743 in Betaflight.
 
-Flash the Firmware
-First, flash via SWD, then you can use DFU for updates. Set the board target as custom STM32H743 in Betaflight.
-
-Batteries & Power
+Batteries & Power,
+- **PRECAUTION:Before connecting the battery check your surroundings for safty**
+  
 Connect the two 2S LiPos using XT30. The board starts in parallel (7.4V) by default. The STM32 can switch to series (14.8V), but there’s a hardware interlock to stop accidental shorting of the batteries. USB-PD charging is handled automatically.
 
-Motors
+Motors,
 Solder 20AWG silicone wire to the phase pads on the edges (3 pads per motor). Left side = M1/M3/M5/M7, right side = M2/M4/M6/M8.
 
-FPV & Extras
+FPV & Extras,
 The OpenFPV camera fits on the 30.5×30.5mm holes. The crash locator uses a small backup battery and sends BLE beacons via the ESP32 when the main power is lost.
 
 ## **IMAGES**
