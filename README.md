@@ -4,7 +4,7 @@
 
 **8-in-1 AIO Flight Controller for X8 Coaxial Racing Drones**
 
-**High-performance X8 coaxial FPV racing drone flight controller** — everything integrated on a single 61×65mm board.
+**High-performance X8 coaxial FPV racing drone flight controller**  everything integrated on a single 61×65mm board.
 
 </div>
 
