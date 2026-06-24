@@ -23,14 +23,23 @@ Cortex-8 is the latest step in that direction — a completely over-the-top 8-in
 Key Specs
 
 MCU: STM32H743 running at 480MHz
+
 Wireless: ESP32-S3 (WiFi + BLE + ELRS support)
+
 ESCs: 8x integrated high-current drivers for X8 coaxial setup
+
 Battery: Dual 2S LiPo with software + hardware switchable series/parallel (7.4V or 14.8V)
+
 Charging: Up to 140W USB-PD EPR at 20V
+
 Blackbox: 128MB QSPI flash
+
 PCB: 61×65mm 8-layer HDI, ENIG finish, X-Ray inspected
+
 Bonus: Built-in crash locator so you’ll (hopefully) never lose the drone
+
 "you will never lose this drone" - me
+
 ---
 
 <div align="center">
