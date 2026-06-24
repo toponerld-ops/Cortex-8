@@ -38,8 +38,6 @@ PCB: 61×65mm 8-layer HDI, ENIG finish, X-Ray inspected
 
 Bonus: Built-in crash locator so you’ll (hopefully) never lose the drone
 
-"you will never lose this drone" - me
-
 ---
 
 <div align="center">
