@@ -218,7 +218,7 @@ basically just match whats in the cli dump and u good.
 * an st-link v2 or v3 for flashing later
 * a usb-c pd charger that can do 20v epr (65w+)
 * 2x 2s lipos (850mah or biggerrr)
-## Step 1 — Order the PCB
+## Step 1 Order the PCB
  
 go to jlcpcb and set it up as:
  
@@ -237,7 +237,7 @@ go to jlcpcb and set it up as:
  
 upload ur gerbers from the `/gerbers` folder. the important part — u gotta specify pofv for the bga vias under the stm32 AND the thermal vias under the mosfets, and u have to write this explicitly in the order notes or theyll just do normal vias and ur board wont work right.
  
-## Step 2 — Order the Components
+## Step 2 Order the Components
  
 export the bom out of easyeda pro and upload it to jlcpcb's smt assembly service so they place everything for u. most parts come from lcsc. before u actually pay, double check stock on the big ones:
  
@@ -257,7 +257,7 @@ export the bom out of easyeda pro and upload it to jlcpcb's smt assembly service
  
 these run out a lot and u dont wanna get stuck mid orderrr.
  
-## Step 3 — Assembly (jlcpcb does it, but watch for this)
+## Step 3 Assembly (jlcpcb does it, but watch for this)
  
 **stm32:** needs xray inspection after reflow so they can actually see if the bga balls connected properly underneath. leaded paste reflows it better, peak temp 235-245c for 60-90 sec.
  
@@ -267,7 +267,7 @@ these run out a lot and u dont wanna get stuck mid orderrr.
  
 **the imus:** super sensitive to flux residue so they get cleaned w ipa right after reflow, and the whole board cant go above 260c peak near them or theyll get damaged.
  
-## Step 4 — Flash the Firmware
+## Step 4 Flash the Firmware
  
 once the board comes back assembled:
  
@@ -281,14 +281,15 @@ once the board comes back assembled:
    * gyro: icm-42688-p primary, icm-20602 backup
    * blackbox: qspi
 
-## Step 5 — Hook Up the Battery
+## Step 5 Hook Up the Battery
  
 1. plug in 2x 2s lipos via the xt30 connectors on the bottom edge
 2. boots in parallel mode (7.4v) by default
 3. the stm32 handles switching to series (14.8v) thru two gpio pins
 4. theres a hardware interlock that physically blocks both switches from being on at the same time no matter what the firmware does — so even if ur code bugs out it cant short the battery
 5. charging happens over usb-c pd at 20v epr — the ch224k negotiates that voltage automatically and the bq25798 handles the actual charge current over i2c
-## Step 6 — Wire the Motors
+
+## Step 6 Wire the Motors
  
 the phase pads are on the board edges:
 * left side: m1, m3, m5, m7 (3 pads each — phase a, b, c)
@@ -300,11 +301,12 @@ solder straight onto them w 20awg silicone wire, pads are 2x3mm so dont try to c
 * m3/m4: right (upper/lower)
 * m5/m6: rear (upper/lower)
 * m7/m8: left (upper/lower)
-## Step 7 — Stack the FPV Setup
+
+## Step 7 Stack the FPV Setup
  
 the openfpv cam module mounts on top using the 30.5x30.5mm m2 holes, plugs in via a 4 pin jst 1.25mm connector on the top edge, and the wifi adapter goes into the header right next to it.
  
-## Step 8 — Set Up the Crash Locator
+## Step 8 Set Up the Crash Locator
  
 1. wire the 300mah backup battery to the jst 1x2 connector
 2. kicks on automatically the second the main battery disconnects
