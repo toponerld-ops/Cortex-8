@@ -4,12 +4,6 @@
 
 **8-in-1 AIO Flight Controller for X8 Coaxial Racing Drones**
 
-[![Platform](https://img.shields.io/badge/Platform-FPV%20Drone-blue)](https://github.com/yourusername/cortex-8)
-[![STM32](https://img.shields.io/badge/MCU-STM32H743-red.svg)](https://www.st.com/stm32h7)
-[![PCB](https://img.shields.io/badge/PCB-8%20Layer%20HDI-green)](https://jlcpcb.com)
-[![OpenFPV](https://img.shields.io/badge/FPV-OpenFPV-orange)](https://openfpv.org)
-[![Generation](https://img.shields.io/badge/Generation-5th-brightgreen)](https://github.com/yourusername/cortex-8)
-
 **High-performance X8 coaxial FPV racing drone flight controller** — everything integrated on a single 61×65mm board.
 
 </div>
